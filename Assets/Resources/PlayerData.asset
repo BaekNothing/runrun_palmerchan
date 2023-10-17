@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 1
   Mass: 1
-  JumpForce: 1
-  GravityScale: 1
+  JumpForce: 5
+  GravityScale: 2
