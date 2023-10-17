@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerObjects", menuName = "ScriptableObjects/PlayerObjects", order = 1)]
-public class PlayerObjects : ScriptableObject
+[CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObjects/PlayerData", order = 1)]
+public class PlayerData : ScriptableObject
 {
-    static PlayerObjects instance;
-    public static PlayerObjects Instance
+    static PlayerData instance;
+    public static PlayerData Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = Resources.Load<PlayerObjects>("PlayerObjects");
+                instance = Resources.Load<PlayerData>("PlayerData");
                 Debug.Log(instance);
             }
             return instance;

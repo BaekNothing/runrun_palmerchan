@@ -23,13 +23,13 @@ public class Player : MonoBehaviour
 
     void SetData()
     {
-        RB.gravityScale = PlayerObjects.Instance.GravityScale;
-        RB.mass = PlayerObjects.Instance.Mass;
+        RB.gravityScale = PlayerData.Instance.GravityScale;
+        RB.mass = PlayerData.Instance.Mass;
     }
 
     void Jump()
     {
-        RB.AddForce(Vector2.up * PlayerObjects.Instance.JumpForce, ForceMode2D.Impulse);
+        RB.AddForce(Vector2.up * PlayerData.Instance.JumpForce, ForceMode2D.Impulse);
     }
 
 }
