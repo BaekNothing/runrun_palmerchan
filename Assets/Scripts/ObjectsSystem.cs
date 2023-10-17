@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 
 public class ObjectsSystem : MonoBehaviour
 {
-    public List<BgObject> _bgObjects = new();
+    public static List<IBgObject> _bgObjects = new();
     public BgObject _prefab;
     public Transform _ResetPosition;
 
