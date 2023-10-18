@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class ObjectsSystem : MonoBehaviour
+public class ObjectsManager : MonoBehaviour
 {
     public static List<IBgObject> _bgObjects = new();
     public BgObject _prefab;
@@ -13,9 +13,9 @@ public class ObjectsSystem : MonoBehaviour
 
     void Awake()
     {
-        InputSystem.BindKey(KeyCode.LeftArrow, MoveLeft, InputSystem.ActionType.Held);
-        InputSystem.BindKey(KeyCode.RightArrow, MoveRight, InputSystem.ActionType.Held);
-        InputSystem.BindKey(KeyCode.Q, CreateObjectByPrefab, InputSystem.ActionType.Pressed);
+        InputManager.BindKey(KeyCode.LeftArrow, MoveLeft, InputManager.ActionType.Held);
+        InputManager.BindKey(KeyCode.RightArrow, MoveRight, InputManager.ActionType.Held);
+        InputManager.BindKey(KeyCode.Q, CreateObjectByPrefab, InputManager.ActionType.Pressed);
     }
 
     void MoveLeft()

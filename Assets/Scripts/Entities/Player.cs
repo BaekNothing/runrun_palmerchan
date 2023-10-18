@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         SetData();
-        InputSystem.BindKey(KeyCode.Space, Jump, InputSystem.ActionType.Pressed);
+        InputManager.BindKey(KeyCode.Space, Jump, InputManager.ActionType.Pressed);
     }
 
     void SetData()

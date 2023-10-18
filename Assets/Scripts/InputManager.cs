@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputSystem : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     public enum ActionType
     {
