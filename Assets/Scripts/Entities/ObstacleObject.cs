@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BgObject : MonoBehaviour, IBgObject
+public class ObstacleObject : MonoBehaviour, IBgObject
 {
     [SerializeField] float _depth;
     [SerializeField] Collider2D _collider2D;
@@ -17,11 +17,6 @@ public class BgObject : MonoBehaviour, IBgObject
     {
         _depth = depth;
         ResetPoint = resetPoint;
-
-        _spriteRenderer.sortingOrder = (int)(-depth * 100);
-        _spriteRenderer.material.color = new Color(1, 1, 1, depth);
-        transform.localScale = new Vector3(0.8f + (1 - depth) * 3, 0.8f + (1 - depth) * 3, 1);
-
         ResetPosition();
     }
 
@@ -30,7 +25,6 @@ public class BgObject : MonoBehaviour, IBgObject
         // 삼각함수를 이용해 depth에 따른 이동속도를 구한다.
 
         float speed = Mathf.Sin(_depth * Mathf.PI / 2) * PlayerData.Instance.Speed;
-
         gameObject.transform.position += new Vector3(direction.x * speed, direction.y * speed, 0) * Time.deltaTime;
     }
 
@@ -40,6 +34,10 @@ public class BgObject : MonoBehaviour, IBgObject
         {
             ResetPosition();
             Debug.Log("ResetPosition");
+        }
+        else if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("Player");
         }
     }
 

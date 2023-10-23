@@ -8,14 +8,12 @@ using UnityEngine.Pool;
 public class ObjectsManager : MonoBehaviour
 {
     public static List<IBgObject> _bgObjects = new();
-    public BgObject _prefab;
+    public BgObject _bgObjectPrefab;
+    public ObstacleObject _obstacleObjectPrefab;
     public Transform _ResetPosition;
 
     void Awake()
     {
-        // InputManager.BindKey(KeyCode.LeftArrow, MoveLeft, InputManager.ActionType.Held);
-        // InputManager.BindKey(KeyCode.RightArrow, MoveRight, InputManager.ActionType.Held);
-        // InputManager.BindKey(KeyCode.Q, CreateObjectByPrefab, InputManager.ActionType.Pressed);
         StartCoroutine(SetObject());
     }
 
@@ -24,7 +22,14 @@ public class ObjectsManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             yield return new WaitForSeconds(0.5f);
-            CreateObjectByPrefab();
+            var RandomDepth = UnityEngine.Random.Range(0.2f, 1.0f);
+            CreateObjectByPrefab<BgObject>(_bgObjectPrefab, RandomDepth);
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            yield return new WaitForSeconds(0.5f);
+            CreateObjectByPrefab<ObstacleObject>(_obstacleObjectPrefab, 1.0f);
         }
     }
 
@@ -35,25 +40,17 @@ public class ObjectsManager : MonoBehaviour
 
     void MoveLeft()
     {
-        Debug.Log($"{_bgObjects.Count} MoveLeft");
         _bgObjects.ForEach(x => x.Move(new Vector2(-PlayerData.Instance.Speed, 0)));
     }
 
     void MoveRight()
     {
-        Debug.Log($"{_bgObjects.Count} MoveRight");
         _bgObjects.ForEach(x => x.Move(new Vector2(PlayerData.Instance.Speed, 0)));
     }
 
-    void CreateObjectByPrefab()
+    public void CreateObjectByPrefab<T>(IBgObject prefab, float depth) where T : IBgObject
     {
-        var RandomDepth = UnityEngine.Random.Range(0.2f, 1.0f);
-        CreateObjectByPrefab(_prefab, RandomDepth);
-    }
-
-    public void CreateObjectByPrefab(BgObject prefab, float depth)
-    {
-        var target = Instantiate(prefab);
+        var target = Instantiate(prefab.GameObject).GetComponent<T>();
         target.Init(depth, _ResetPosition);
         _bgObjects.Add(target);
     }
