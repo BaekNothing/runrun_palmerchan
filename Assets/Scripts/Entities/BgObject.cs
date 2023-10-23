@@ -19,13 +19,18 @@ public class BgObject : MonoBehaviour, IBgObject
 
         _spriteRenderer.sortingOrder = (int)(-depth * 100);
         _spriteRenderer.material.color = new Color(1, 1, 1, depth);
+        transform.localScale = new Vector3(0.8f + (1 - depth) * 3, 0.8f + (1 - depth) * 3, 1);
+
+        ResetPosition();
     }
 
     public void Move(Vector2 direction)
     {
         // 삼각함수를 이용해 depth에 따른 이동속도를 구한다.
+
         float speed = Mathf.Sin(_depth * Mathf.PI / 2) * PlayerData.Instance.Speed;
-        gameObject.transform.position += new Vector3(direction.x * speed, direction.y * speed, 0);
+
+        gameObject.transform.position += new Vector3(direction.x * speed, direction.y * speed, 0) * Time.deltaTime;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -33,16 +38,13 @@ public class BgObject : MonoBehaviour, IBgObject
         if (other.gameObject.tag == "Finish")
         {
             ResetPosition();
-            Debug.Log("Reset");
-        }
-        else
-        {
-            Debug.Log($"Collision with {other.gameObject.name}");
+            Debug.Log("ResetPosition");
         }
     }
 
     public void ResetPosition()
     {
-        gameObject.transform.position = ResetPoint.position;
+        var delayOffset = UnityEngine.Random.Range(0.0f, 120f);
+        gameObject.transform.position = ResetPoint.position + new Vector3(delayOffset, 0, _depth);
     }
 }
