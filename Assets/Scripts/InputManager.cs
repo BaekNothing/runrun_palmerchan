@@ -46,8 +46,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    static Dictionary<KeyCode, IActionWrapper> keyBindings = new();
-    KeyCode lastKey = KeyCode.None;
+    static readonly Dictionary<KeyCode, IActionWrapper> keyBindings = new();
 
     public static void BindKey(KeyCode key, Action action, ActionType type)
     {
@@ -67,12 +66,10 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(key))
             {
                 keyBindings[key].Invoke(ActionType.Pressed);
-                lastKey = key;
             }
             else if (Input.GetKeyUp(key))
             {
                 keyBindings[key].Invoke(ActionType.Released);
-                lastKey = KeyCode.None;
             }
             else if (Input.GetKey(key))
             {

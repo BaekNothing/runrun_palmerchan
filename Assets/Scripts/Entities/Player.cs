@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
 
         if (Physics2D.OverlapCircle(transform.position, PlayerData.Instance.CheckSupportObjectRadius, LayerMask.GetMask("SupportObjects")))
         {
-            PlayerData.Instance.Speed += PlayerData.Instance.SupportObjectValue;
+            PlayerData.Instance.Speed += PlayerData.Instance.SpeedIncreaseValue;
             Debug.Log("Speed Up");
         }
     }

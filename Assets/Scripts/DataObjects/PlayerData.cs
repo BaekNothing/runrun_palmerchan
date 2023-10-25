@@ -52,13 +52,22 @@ public class PlayerData : ScriptableObject
         }
     }
 
-    [Header("Initial Settings")]
-    public float Mass = 1;
-    public float GravityScale = 2;
+    public void Init()
+    {
+        Speed = SpeedMin;
+    }
 
-    [Header("Game Settings")]
-    public float Speed = 1;
+    [Header("Immutable Value")]
+    public float Mass = 1;
+    public float GravityScale = 4;
+
     public float CheckSupportObjectRadius = 0.5f;
     public float CheckSupportObjectDelay = 0.5f;
-    public float SupportObjectValue = 1.0f;
+
+    public float SpeedMax = 10;
+    public float SpeedMin = 3;
+    public float SpeedIncreaseValue = 0.5f;
+
+    [Header("Mutable Value")]
+    public float Speed = 1;
 }
