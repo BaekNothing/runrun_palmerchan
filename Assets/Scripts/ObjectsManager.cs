@@ -10,11 +10,13 @@ public class ObjectsManager : MonoBehaviour
     public static List<IBgObject> _bgObjects = new();
     public BgObject _bgObjectPrefab;
     public ObstacleObject _obstacleObjectPrefab;
+    public SupportObject _supportObjectPrefab;
     public Transform _ResetPosition;
 
     void Awake()
     {
         StartCoroutine(SetObject());
+        GamePlayManager.BindPeriodicAction(3.0, ActiveSupportObject);
     }
 
     IEnumerator SetObject()
@@ -30,6 +32,12 @@ public class ObjectsManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             CreateObjectByPrefab<ObstacleObject>(_obstacleObjectPrefab, 1.0f);
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            yield return new WaitForSeconds(0.5f);
+            CreateObjectByPrefab<SupportObject>(_supportObjectPrefab, 1.0f);
         }
     }
 
@@ -53,5 +61,11 @@ public class ObjectsManager : MonoBehaviour
         var target = Instantiate(prefab.GameObject).GetComponent<T>();
         target.Init(depth, _ResetPosition);
         _bgObjects.Add(target);
+    }
+
+    public void ActiveSupportObject()
+    {
+        var target = _bgObjects.Where(x => x.GameObject.activeSelf == false).FirstOrDefault();
+        target?.GameObject.SetActive(true);
     }
 }

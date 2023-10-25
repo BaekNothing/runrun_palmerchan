@@ -26,10 +26,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    [SerializeField] float _checkSupportDelay = 0;
+
     void Start()
     {
         SetData();
-        BindKeys();
+        BindKey();
+        BindPeriodicAction();
     }
 
     public void SetData()
@@ -38,23 +41,32 @@ public class Player : MonoBehaviour
         RB.mass = PlayerData.Instance.Mass;
     }
 
-    void BindKeys()
+    void BindKey()
     {
-        InputManager.BindKey(KeyCode.Space, Jump, InputManager.ActionType.Released);
+        InputManager.BindKey(KeyCode.Space, CheckSupportObject, InputManager.ActionType.Pressed);
         Debug.Log("Jump");
     }
 
-    void Jump()
+    void CheckSupportObject()
     {
-        RB.AddForce(Vector2.up * PlayerData.Instance.JumpForce, ForceMode2D.Impulse);
-        ani.SetTrigger("Jump");
-    }
+        if (_checkSupportDelay < PlayerData.Instance.CheckSupportObjectDelay) return;
+        _checkSupportDelay = 0;
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (Physics2D.OverlapCircle(transform.position, PlayerData.Instance.CheckSupportObjectRadius, LayerMask.GetMask("SupportObjects")))
         {
-            ani.SetTrigger("Land");
+            PlayerData.Instance.Speed += PlayerData.Instance.SupportObjectValue;
+            Debug.Log("Speed Up");
         }
     }
+
+    void BindPeriodicAction()
+    {
+        GamePlayManager.BindPeriodicAction(Time.deltaTime, IncreaseCheckSupportDelay);
+    }
+
+    void IncreaseCheckSupportDelay()
+    {
+        _checkSupportDelay += Time.deltaTime;
+    }
+
 }

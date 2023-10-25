@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mass: 1
   GravityScale: 4
-  Speed: 5
-  JumpForce: 20
+  Speed: 4
+  JumpForce: 25
+  MaxJumpCount: 2

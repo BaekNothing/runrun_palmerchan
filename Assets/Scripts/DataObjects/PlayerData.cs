@@ -54,9 +54,11 @@ public class PlayerData : ScriptableObject
 
     [Header("Initial Settings")]
     public float Mass = 1;
-    public float GravityScale = 1;
+    public float GravityScale = 2;
 
     [Header("Game Settings")]
     public float Speed = 1;
-    public float JumpForce = 1;
+    public float CheckSupportObjectRadius = 0.5f;
+    public float CheckSupportObjectDelay = 0.5f;
+    public float SupportObjectValue = 1.0f;
 }
