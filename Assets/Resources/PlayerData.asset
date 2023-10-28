@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mass: 1
   GravityScale: 4
-  Speed: 3
   CheckSupportObjectRadius: 0.5
   CheckSupportObjectDelay: 0.5
-  SupportObjectValue: 1
+  SpeedMax: 10
+  SpeedMin: 3
+  SpeedIncreaseValue: 0.1
+  Speed: 3
