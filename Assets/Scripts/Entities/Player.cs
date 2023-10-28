@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] EffectController _effectController;
+    public EffectController EffectController
+    {
+        get
+        {
+            if (_effectController == null)
+                _effectController = GetComponent<EffectController>();
+            return _effectController;
+        }
+    }
+
     [SerializeField] Rigidbody2D rb;
     Rigidbody2D RB
     {
@@ -28,6 +39,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] float _checkSupportDelay = 0;
 
+    enum PlayerCheckEffectState
+    {
+        MISS = 0,
+        GREAT,
+        PERFECT
+    }
+
     void Start()
     {
         SetData();
@@ -51,10 +69,19 @@ public class Player : MonoBehaviour
         if (_checkSupportDelay < GameData.Instance.CheckSupportObjectDelay) return;
         _checkSupportDelay = 0;
 
-        if (Physics2D.OverlapCircle(transform.position, GameData.Instance.CheckSupportObjectRadius, LayerMask.GetMask("SupportObjects")))
+        if (Physics2D.OverlapCircle(transform.position,
+            GameData.Instance.CheckSupportObjectRadius, LayerMask.GetMask("SupportObjects")))
         {
+            // if player check support object, reset check delay
+            _checkSupportDelay = GameData.Instance.CheckSupportObjectDelay;
+
+            EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
             GameData.Instance.Speed += GameData.Instance.SpeedIncreaseValue;
             Utility.Log("Speed: " + GameData.Instance.Speed, Utility.LogLevel.Verbose);
+        }
+        else
+        {
+            EffectController.PlayEffect((int)PlayerCheckEffectState.MISS);
         }
     }
 
