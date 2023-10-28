@@ -37,25 +37,24 @@ public class Player : MonoBehaviour
 
     public void SetData()
     {
-        RB.gravityScale = PlayerData.Instance.GravityScale;
-        RB.mass = PlayerData.Instance.Mass;
+        RB.gravityScale = GameData.Instance.GravityScale;
+        RB.mass = GameData.Instance.Mass;
     }
 
     void BindKey()
     {
         InputManager.BindKey(KeyCode.Space, CheckSupportObject, InputManager.ActionType.Pressed);
-        Debug.Log("Jump");
     }
 
     void CheckSupportObject()
     {
-        if (_checkSupportDelay < PlayerData.Instance.CheckSupportObjectDelay) return;
+        if (_checkSupportDelay < GameData.Instance.CheckSupportObjectDelay) return;
         _checkSupportDelay = 0;
 
-        if (Physics2D.OverlapCircle(transform.position, PlayerData.Instance.CheckSupportObjectRadius, LayerMask.GetMask("SupportObjects")))
+        if (Physics2D.OverlapCircle(transform.position, GameData.Instance.CheckSupportObjectRadius, LayerMask.GetMask("SupportObjects")))
         {
-            PlayerData.Instance.Speed += PlayerData.Instance.SpeedIncreaseValue;
-            Debug.Log("Speed Up");
+            GameData.Instance.Speed += GameData.Instance.SpeedIncreaseValue;
+            Utility.Log("Speed: " + GameData.Instance.Speed, Utility.LogLevel.Verbose);
         }
     }
 

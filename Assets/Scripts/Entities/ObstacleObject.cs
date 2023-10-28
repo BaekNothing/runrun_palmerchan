@@ -24,7 +24,7 @@ public class ObstacleObject : MonoBehaviour, IBgObject
     {
         // 삼각함수를 이용해 depth에 따른 이동속도를 구한다.
 
-        float speed = Mathf.Sin(_depth * Mathf.PI / 2) * PlayerData.Instance.Speed;
+        float speed = Mathf.Sin(_depth * Mathf.PI / 2) * GameData.Instance.Speed;
         gameObject.transform.position += new Vector3(direction.x * speed, direction.y * speed, 0) * Time.deltaTime;
     }
 
@@ -33,11 +33,11 @@ public class ObstacleObject : MonoBehaviour, IBgObject
         if (other.gameObject.tag == "Finish")
         {
             ResetPosition();
-            Debug.Log("ResetPosition");
+            Utility.Log("ResetPosition", Utility.LogLevel.Verbose);
         }
         else if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Player");
+            Utility.Log("Player Hit", Utility.LogLevel.Verbose);
         }
     }
 

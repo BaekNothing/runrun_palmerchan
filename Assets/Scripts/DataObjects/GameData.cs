@@ -5,8 +5,8 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 
-[CustomEditor(typeof(PlayerData))]
-public class PlayerDataEditor : Editor
+[CustomEditor(typeof(GameData))]
+public class GameDataEditor : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -17,12 +17,12 @@ public class PlayerDataEditor : Editor
             var player = FindObjectsByType<Player>(FindObjectsSortMode.InstanceID);
             if (player == null)
             {
-                Debug.LogError("Player is not found");
+                Utility.Log("Player is not found", Utility.LogLevel.Important);
                 return;
             }
             else if (player.Length > 1)
             {
-                Debug.LogError("There are more than one player");
+                Utility.Log("There are more than one player", Utility.LogLevel.Important);
                 return;
             }
             else
@@ -35,18 +35,17 @@ public class PlayerDataEditor : Editor
 #endif
 
 
-[CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObjects/PlayerData", order = 1)]
-public class PlayerData : ScriptableObject
+[CreateAssetMenu(fileName = "GameData", menuName = "ScriptableObjects/GameData", order = 1)]
+public class GameData : ScriptableObject
 {
-    static PlayerData instance;
-    public static PlayerData Instance
+    static GameData instance;
+    public static GameData Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = Resources.Load<PlayerData>("PlayerData");
-                Debug.Log(instance);
+                instance = Resources.Load<GameData>("GameData");
             }
             return instance;
         }
@@ -56,6 +55,15 @@ public class PlayerData : ScriptableObject
     {
         Speed = SpeedMin;
     }
+
+    [Header("Game Option")]
+    public Utility.LogLevel LogLevel = Utility.LogLevel.Normal;
+
+    [Header("Game Object")]
+    public Player PlayerPrefab;
+    public BgObject BgObjectsPrefab;
+    public ObstacleObject ObstaclePrefab;
+    public SupportObject SupportObjectPrefab;
 
     [Header("Immutable Value")]
     public float Mass = 1;

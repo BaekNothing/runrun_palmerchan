@@ -8,9 +8,6 @@ using UnityEngine.Pool;
 public class ObjectsManager : MonoBehaviour
 {
     public static List<IBgObject> _bgObjects = new();
-    public BgObject _bgObjectPrefab;
-    public ObstacleObject _obstacleObjectPrefab;
-    public SupportObject _supportObjectPrefab;
     public Transform _ResetPosition;
 
     void Awake()
@@ -25,19 +22,22 @@ public class ObjectsManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             var RandomDepth = UnityEngine.Random.Range(0.2f, 1.0f);
-            CreateObjectByPrefab<BgObject>(_bgObjectPrefab, RandomDepth);
+            CreateObjectByPrefab<BgObject>(
+                GameData.Instance.BgObjectsPrefab, RandomDepth);
         }
 
         for (int i = 0; i < 3; i++)
         {
             yield return new WaitForSeconds(0.5f);
-            CreateObjectByPrefab<ObstacleObject>(_obstacleObjectPrefab, 1.0f);
+            CreateObjectByPrefab<ObstacleObject>(
+                GameData.Instance.ObstaclePrefab, 1.0f);
         }
 
         for (int i = 0; i < 3; i++)
         {
             yield return new WaitForSeconds(0.5f);
-            CreateObjectByPrefab<SupportObject>(_supportObjectPrefab, 1.0f);
+            CreateObjectByPrefab<SupportObject>(
+                GameData.Instance.SupportObjectPrefab, 1.0f);
         }
     }
 
@@ -48,12 +48,12 @@ public class ObjectsManager : MonoBehaviour
 
     void MoveLeft()
     {
-        _bgObjects.ForEach(x => x.Move(new Vector2(-PlayerData.Instance.Speed, 0)));
+        _bgObjects.ForEach(x => x.Move(new Vector2(-GameData.Instance.Speed, 0)));
     }
 
     void MoveRight()
     {
-        _bgObjects.ForEach(x => x.Move(new Vector2(PlayerData.Instance.Speed, 0)));
+        _bgObjects.ForEach(x => x.Move(new Vector2(GameData.Instance.Speed, 0)));
     }
 
     public void CreateObjectByPrefab<T>(IBgObject prefab, float depth) where T : IBgObject

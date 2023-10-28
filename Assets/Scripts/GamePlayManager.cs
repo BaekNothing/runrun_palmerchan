@@ -17,7 +17,7 @@ public class GamePlayManager : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         Screen.SetResolution(1920, 480, false);
-        PlayerData.Instance.Init();
+        GameData.Instance.Init();
     }
 
     void Update()

@@ -25,7 +25,7 @@ public class SupportObject : MonoBehaviour, IBgObject
         if (!gameObject.activeSelf) return;
         // 삼각함수를 이용해 depth에 따른 이동속도를 구한다.
 
-        float speed = Mathf.Sin(_depth * Mathf.PI / 2) * PlayerData.Instance.Speed;
+        float speed = Mathf.Sin(_depth * Mathf.PI / 2) * GameData.Instance.Speed;
         gameObject.transform.position += new Vector3(direction.x * speed, direction.y * speed, 0) * Time.deltaTime;
     }
 
