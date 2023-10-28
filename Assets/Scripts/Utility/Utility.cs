@@ -5,8 +5,6 @@ using UnityEngine;
 
 public static class Utility
 {
-    static LogLevel _logLevel = LogLevel.Normal;
-
     public enum LogLevel
     {
         Important = 0,
@@ -16,7 +14,7 @@ public static class Utility
 
     public static void Log(string message, LogLevel logLevel = LogLevel.Normal)
     {
-        if (logLevel > _logLevel)
+        if (logLevel > GameData.Instance.LogLevel)
         {
             return;
         }
