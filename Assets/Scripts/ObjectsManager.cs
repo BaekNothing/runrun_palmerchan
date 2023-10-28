@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 
 public class ObjectsManager : MonoBehaviour
 {
-    public static List<IBgObject> _bgObjects = new();
+    public List<AbstractObject> _objects = new();
     public Transform _ResetPosition;
 
     void Awake()
@@ -48,24 +48,24 @@ public class ObjectsManager : MonoBehaviour
 
     void MoveLeft()
     {
-        _bgObjects.ForEach(x => x.Move(new Vector2(-GameData.Instance.Speed, 0)));
+        _objects.ForEach(x => x.Move(new Vector2(-GameData.Instance.Speed, 0)));
     }
 
     void MoveRight()
     {
-        _bgObjects.ForEach(x => x.Move(new Vector2(GameData.Instance.Speed, 0)));
+        _objects.ForEach(x => x.Move(new Vector2(GameData.Instance.Speed, 0)));
     }
 
-    public void CreateObjectByPrefab<T>(IBgObject prefab, float depth) where T : IBgObject
+    public void CreateObjectByPrefab<T>(AbstractObject prefab, float depth) where T : AbstractObject
     {
-        var target = Instantiate(prefab.GameObject).GetComponent<T>();
+        var target = Instantiate(prefab.gameObject).GetComponent<T>();
         target.Init(depth, _ResetPosition);
-        _bgObjects.Add(target);
+        _objects.Add(target);
     }
 
     public void ActiveSupportObject()
     {
-        var target = _bgObjects.Where(x => x.GameObject.activeSelf == false).FirstOrDefault();
-        target?.GameObject.SetActive(true);
+        var target = _objects.Where(x => x.gameObject.activeSelf == false).FirstOrDefault();
+        target?.gameObject.SetActive(true);
     }
 }

@@ -2,21 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BgObject : MonoBehaviour, IBgObject
+public class BgObject : AbstractObject
 {
-    [SerializeField] float _depth;
-    [SerializeField] Collider2D _collider2D;
-    [SerializeField] SpriteRenderer _spriteRenderer;
-
-    public float Depth => _depth;
-    public Collider2D Collider2D => _collider2D;
-    public GameObject GameObject => gameObject;
-    public Transform ResetPoint { get; set; }
-
-    public void Init(float depth, Transform resetPoint)
+    public override void Init(float depth, Transform resetPoint)
     {
         _depth = depth;
-        ResetPoint = resetPoint;
+        _resetPoint = resetPoint;
 
         _spriteRenderer.sortingOrder = (int)(-depth * 100);
         _spriteRenderer.material.color = new Color(1, 1, 1, depth);
@@ -25,7 +16,7 @@ public class BgObject : MonoBehaviour, IBgObject
         ResetPosition();
     }
 
-    public void Move(Vector2 direction)
+    public override void Move(Vector2 direction)
     {
         // 삼각함수를 이용해 depth에 따른 이동속도를 구한다.
 
@@ -46,6 +37,6 @@ public class BgObject : MonoBehaviour, IBgObject
     public void ResetPosition()
     {
         var delayOffset = UnityEngine.Random.Range(0.0f, 120f);
-        gameObject.transform.position = ResetPoint.position + new Vector3(delayOffset, 0, _depth);
+        gameObject.transform.position = _resetPoint.position + new Vector3(delayOffset, 0, _depth);
     }
 }

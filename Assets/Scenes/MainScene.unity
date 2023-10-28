@@ -194,9 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8fac894699a3241ae72f4c2295130f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bgObjectPrefab: {fileID: 6965412290759755650, guid: c2d3b328496a798409e15acbcd3e1fc4, type: 3}
-  _obstacleObjectPrefab: {fileID: 695711878000760049, guid: 30578c6b9f483704ea6e8ae8ee7a8892, type: 3}
-  _supportObjectPrefab: {fileID: -4755438682567490364, guid: 077e8465456fffa4e8b1060cc5851583, type: 3}
+  _bgObjects: []
   _ResetPosition: {fileID: 1981723743}
 --- !u!1 &433988334
 GameObject:
