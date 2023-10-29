@@ -16,7 +16,16 @@ public class PeriodicActionManager : AbstractManager
 
     public static void BindPeriodicAction(double time, Action action)
     {
-        _periodicAction.Add(time, action);
+        if (_periodicAction.ContainsKey(time))
+        {
+            // prevent duplicate action
+            _periodicAction[time] -= action;
+            _periodicAction[time] += action;
+        }
+        else
+        {
+            _periodicAction.Add(time, action);
+        }
     }
 
     public override void UpdateAction()
