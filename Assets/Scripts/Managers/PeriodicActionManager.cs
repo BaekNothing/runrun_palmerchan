@@ -3,24 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GamePlayManager : MonoBehaviour
+[Serializable]
+public class PeriodicActionManager : AbstractManager
 {
     [SerializeField] double _timer = 0;
     static readonly Dictionary<double, Action> _periodicAction = new();
+
+    public override void Init()
+    {
+        IsReady = true;
+    }
 
     public static void BindPeriodicAction(double time, Action action)
     {
         _periodicAction.Add(time, action);
     }
 
-    void Awake()
-    {
-        Application.targetFrameRate = 60;
-        Screen.SetResolution(1920, 480, false);
-        GameData.Instance.Init();
-    }
-
-    void Update()
+    public override void UpdateAction()
     {
         _timer += Time.deltaTime;
 
@@ -32,7 +31,4 @@ public class GamePlayManager : MonoBehaviour
             }
         }
     }
-
-
-
 }

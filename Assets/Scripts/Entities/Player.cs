@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 
     void BindKey()
     {
-        InputManager.BindKey(KeyCode.Space, CheckSupportObject, InputManager.ActionType.Pressed);
+        InputManager.BindKey(KeyCode.Space, CheckSupportObject, ActionWrapper.ActionType.Pressed);
     }
 
     void CheckSupportObject()
@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
 
     void BindPeriodicAction()
     {
-        GamePlayManager.BindPeriodicAction(Time.deltaTime, IncreaseCheckSupportDelay);
+        PeriodicActionManager.BindPeriodicAction(Time.deltaTime, IncreaseCheckSupportDelay);
     }
 
     void IncreaseCheckSupportDelay()

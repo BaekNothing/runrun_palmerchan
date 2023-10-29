@@ -51,9 +51,12 @@ public class GameData : ScriptableObject
         }
     }
 
-    public void Init()
+    public enum GameState
     {
-        Speed = SpeedMin;
+        Ready = 0,
+        Play,
+        Pause,
+        GameOver
     }
 
     [Header("Game Option")]
@@ -78,4 +81,13 @@ public class GameData : ScriptableObject
 
     [Header("Mutable Value")]
     public float Speed = 1;
+    public double Score = 0;
+    public GameState State = GameState.Ready;
+
+    public void Init()
+    {
+        Speed = SpeedMin;
+        Score = 0;
+        State = GameState.Ready;
+    }
 }

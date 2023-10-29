@@ -5,6 +5,10 @@ using UnityEngine;
 
 public static class Utility
 {
+    public const string TAG_PLAYER = "Player";
+    public const string TAG_SUPPORT = "Support";
+    public const string TAG_RESPAWN = "Respawn";
+
     public enum LogLevel
     {
         Important = 0,
