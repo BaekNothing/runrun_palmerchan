@@ -14,11 +14,27 @@ public class InputManager : AbstractManager
         IsReady = true;
     }
 
-    static readonly Dictionary<KeyCode, ActionWrapper> keyBindings = new();
+    static readonly Dictionary<KeyCode, List<ActionWrapper>> keyBindings = new();
 
     public static void BindKey(KeyCode key, Action action, ActionWrapper.ActionType type)
     {
-        keyBindings.Add(key, new ActionWrapper(action, type));
+        if (keyBindings.ContainsKey(key))
+        {
+            var actions = keyBindings[key];
+            var wrapper = actions.FirstOrDefault(x => x.Type == type);
+            if (wrapper != null)
+            {
+                wrapper += action;
+            }
+            else
+            {
+                actions.Add(new ActionWrapper(action, type));
+            }
+        }
+        else
+        {
+            keyBindings.Add(key, new List<ActionWrapper>() { new(action, type) });
+        }
     }
 
     public static void UnbindKey(KeyCode key)
@@ -32,17 +48,17 @@ public class InputManager : AbstractManager
         {
             if (Input.GetKeyDown(key))
             {
-                keyBindings[key].Invoke(ActionWrapper.ActionType.Pressed);
+                keyBindings[key].ForEach(x => x.Invoke(ActionWrapper.ActionType.Pressed));
                 _pressedKey = key;
             }
             else if (Input.GetKeyUp(key))
             {
-                keyBindings[key].Invoke(ActionWrapper.ActionType.Released);
+                keyBindings[key].ForEach(x => x.Invoke(ActionWrapper.ActionType.Released));
                 _pressedKey = KeyCode.None;
             }
             else if (Input.GetKey(key))
             {
-                keyBindings[key].Invoke(ActionWrapper.ActionType.Held);
+                keyBindings[key].ForEach(x => x.Invoke(ActionWrapper.ActionType.Held));
                 _pressedKey = key;
             }
         }

@@ -30,6 +30,16 @@ public class GamePlayManager : AbstractManager
     void BindKey()
     {
         InputManager.BindKey(KeyCode.Escape, GameQuit, ActionWrapper.ActionType.Released);
+        InputManager.BindKey(KeyCode.Space, GameStart, ActionWrapper.ActionType.Released);
+    }
+
+    void GameStart()
+    {
+        if (GameData.Instance.State == GameData.GameState.Play)
+            return;
+
+        GameData.Instance.Init();
+        GameData.Instance.State = GameData.GameState.Play;
     }
 
     void GameQuit()

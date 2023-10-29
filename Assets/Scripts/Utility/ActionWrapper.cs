@@ -13,7 +13,7 @@ public class ActionWrapper
         Held
     }
 
-    private readonly Action action;
+    private Action action;
     private readonly ActionType type;
 
     public ActionType Type => type;
@@ -33,5 +33,19 @@ public class ActionWrapper
         {
             action.Invoke();
         }
+    }
+
+    public static ActionWrapper operator +(ActionWrapper wrapper, Action action)
+    {
+        // prevent duplicate action
+        wrapper.action -= action;
+        wrapper.action += action;
+        return wrapper;
+    }
+
+    public static ActionWrapper operator -(ActionWrapper wrapper, Action action)
+    {
+        wrapper.action -= action;
+        return wrapper;
     }
 }
