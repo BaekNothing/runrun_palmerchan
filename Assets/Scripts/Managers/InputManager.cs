@@ -18,6 +18,9 @@ public class InputManager : AbstractManager
 
     public static void BindKey(KeyCode key, Action action, ActionWrapper.ActionType type)
     {
+        if (key == KeyCode.None && type == ActionWrapper.ActionType.Released)
+            throw new Exception("Invalid Key Binding, None Key can't be released");
+
         if (keyBindings.ContainsKey(key))
         {
             var actions = keyBindings[key];
@@ -44,6 +47,12 @@ public class InputManager : AbstractManager
 
     public override void UpdateAction()
     {
+        InputKey();
+        InputAnyKey();
+    }
+
+    void InputKey()
+    {
         foreach (var key in keyBindings.Keys)
         {
             if (Input.GetKeyDown(key))
@@ -57,6 +66,28 @@ public class InputManager : AbstractManager
                 _pressedKey = KeyCode.None;
             }
             else if (Input.GetKey(key))
+            {
+                keyBindings[key].ForEach(x => x.Invoke(ActionWrapper.ActionType.Held));
+                _pressedKey = key;
+            }
+        }
+    }
+
+    void InputAnyKey()
+    {
+        if (Input.anyKeyDown)
+        {
+            var key = KeyCode.None;
+            if (keyBindings.ContainsKey(key))
+            {
+                keyBindings[key].ForEach(x => x.Invoke(ActionWrapper.ActionType.Pressed));
+                _pressedKey = key;
+            }
+        }
+        else if (Input.anyKey)
+        {
+            var key = KeyCode.None;
+            if (keyBindings.ContainsKey(key))
             {
                 keyBindings[key].ForEach(x => x.Invoke(ActionWrapper.ActionType.Held));
                 _pressedKey = key;
