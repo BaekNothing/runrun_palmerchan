@@ -84,7 +84,6 @@ public class Player : MonoBehaviour
             EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
             GameData.Instance.Speed += GameData.Instance.SpeedIncreaseValue;
             GameData.Instance.Speed = Mathf.Min(GameData.Instance.Speed, GameData.Instance.SpeedMax);
-
             Utility.Log("Speed: " + GameData.Instance.Speed, Utility.LogLevel.Verbose);
         }
         else
@@ -106,7 +105,6 @@ public class Player : MonoBehaviour
         _checkSupportDelay += Time.deltaTime;
     }
 
-    //
     void SetPositionBySpeed()
     {
         _positionBySpeed.x = Mathf.Lerp(

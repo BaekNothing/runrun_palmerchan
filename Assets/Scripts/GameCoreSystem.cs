@@ -17,10 +17,16 @@ public class GameCoreSystem : MonoBehaviour
 
     void Awake()
     {
-        _periodicActionManager.Init();
+        Time.timeScale = 0f;
+    }
+
+    // For making sure that all init which are called in Awake() are done.
+    void Start()
+    {
         _objectsManager.Init();
-        _inputManager.Init();
         _gamePlayManager.Init();
+        _inputManager.Init();
+        _periodicActionManager.Init();
     }
 
     void Update()

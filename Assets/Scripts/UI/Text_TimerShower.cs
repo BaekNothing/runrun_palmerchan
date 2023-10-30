@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Text_ScoreShower : AbstractText
+public class Text_TimerShower : AbstractText
 {
     [SerializeField] Text _text = null;
     Text Text
@@ -23,6 +23,10 @@ public class Text_ScoreShower : AbstractText
 
     void UpdateScore()
     {
-        Text.text = GameData.Instance.Score.ToString(Utility.SCORE_FORMAT);
+        var time = GameData.Instance.TimeLimit - GameData.Instance.Timer;
+        int minute = (int)time / 60;
+        int second = (int)time % 60;
+
+        Text.text = $"{minute:D2}:{second:D2}";
     }
 }

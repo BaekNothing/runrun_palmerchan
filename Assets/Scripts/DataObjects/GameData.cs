@@ -68,6 +68,8 @@ public class GameData : ScriptableObject
     public float CheckSupportObjectRadius = 0.5f;
     public float CheckSupportObjectDelay = 0.5f;
 
+    public float TimeLimit = 30;
+
     public float SpeedMax = 10;
     public float SpeedMin = 3;
     public float SpeedIncreaseValue = 0.5f;
@@ -80,12 +82,14 @@ public class GameData : ScriptableObject
     [Header("Mutable Value")]
     public float Speed = 1;
     public double Score = 0;
+    public float Timer = 0;
     public GameState State = GameState.Ready;
 
     public void Init()
     {
         Speed = SpeedMin;
         Score = 0;
+        Timer = 0;
         State = GameState.Ready;
     }
 }
