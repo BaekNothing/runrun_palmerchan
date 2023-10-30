@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [Serializable]
 public class GamePlayManager : AbstractManager
@@ -19,6 +20,7 @@ public class GamePlayManager : AbstractManager
         Application.targetFrameRate = 60;
         Screen.SetResolution(1920, 480, false);
         BindKey();
+        BindMouse();
         BindPeriodicAction();
     }
 
@@ -29,8 +31,8 @@ public class GamePlayManager : AbstractManager
 
     void BindKey()
     {
-        InputManager.BindKey(KeyCode.Escape, GameQuit, ActionWrapper.ActionType.Released);
         InputManager.BindKey(KeyCode.Space, GameStart, ActionWrapper.ActionType.Released);
+        InputManager.BindKey(KeyCode.Escape, GameQuit, ActionWrapper.ActionType.Released);
     }
 
     void GameStart()
@@ -45,6 +47,11 @@ public class GamePlayManager : AbstractManager
     void GameQuit()
     {
         Utility.Log("Game Quit");
+    }
+
+    void BindMouse()
+    {
+        InputManager.BindMouse(MouseButton.LeftMouse, GameStart, ActionWrapper.ActionType.Released);
     }
 
     void BindPeriodicAction()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
     void BindKey()
     {
         InputManager.BindKey(KeyCode.Space, CheckSupportObject, ActionWrapper.ActionType.Pressed);
+        InputManager.BindMouse(MouseButton.LeftMouse, CheckSupportObject, ActionWrapper.ActionType.Pressed);
     }
 
     void CheckSupportObject()
