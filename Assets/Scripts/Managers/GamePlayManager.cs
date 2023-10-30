@@ -63,11 +63,13 @@ public class GamePlayManager : AbstractManager
         if (GameData.Instance.State == GameData.GameState.Play)
             return;
 
-        Time.timeScale = 1;
 
-        GameData.Instance.Init();
+        if (GameData.Instance.State != GameData.GameState.Pause)
+            GameData.Instance.Init();
         GameData.Instance.State = GameData.GameState.Play;
         _gameStartAction?.Invoke();
+
+        Time.timeScale = 1;
     }
 
     void GamePaused()
@@ -75,10 +77,10 @@ public class GamePlayManager : AbstractManager
         if (GameData.Instance.State == GameData.GameState.Pause)
             return;
 
-        Time.timeScale = 0;
-
         GameData.Instance.State = GameData.GameState.Pause;
         _gamePausedAction?.Invoke();
+
+        Time.timeScale = 0;
     }
 
     void BindMouse()
