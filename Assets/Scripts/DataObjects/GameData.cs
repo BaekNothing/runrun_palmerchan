@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -10,27 +11,18 @@ public class GameDataEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
 
-        if (GUILayout.Button("Apply"))
+        if (GUILayout.Button("SetScreenSize"))
         {
-            var player = FindObjectsByType<Player>(FindObjectsSortMode.InstanceID);
-            if (player == null)
-            {
-                Utility.Log("Player is not found", Utility.LogLevel.Important);
-                return;
-            }
-            else if (player.Length > 1)
-            {
-                Utility.Log("There are more than one player", Utility.LogLevel.Important);
-                return;
-            }
-            else
-                player[0].SetData();
+            // SetScreenSize in build setting
+            var gameData = target as GameData;
+            PlayerSettings.defaultWebScreenWidth = (int)gameData.ScreenSize.x;
+            PlayerSettings.defaultWebScreenHeight = (int)gameData.ScreenSize.y;
         }
+
+        base.OnInspectorGUI();
     }
 }
-
 
 #endif
 
@@ -61,6 +53,7 @@ public class GameData : ScriptableObject
 
     [Header("Game Option")]
     public Utility.LogLevel LogLevel = Utility.LogLevel.Normal;
+    public Vector2 ScreenSize = new(960, 250);
 
     [Header("Game Object")]
     public Player PlayerPrefab;
