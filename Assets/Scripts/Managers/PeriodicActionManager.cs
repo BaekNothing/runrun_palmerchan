@@ -32,6 +32,8 @@ public class PeriodicActionManager : AbstractManager
 
     public override void UpdateAction()
     {
+        if (GameData.Instance.State != GameData.GameState.Play) return;
+
         _timer += Time.deltaTime;
 
         foreach (var action in _periodicAction)

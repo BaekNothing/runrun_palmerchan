@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using System.IO;
+using System;
+
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -11,6 +15,19 @@ public class GameDataEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        if (GUILayout.Button("SaveDataInText"))
+        {
+            SaveDataInText();
+        }
+
+        GUILayout.Space(10);
+
+        if (GUILayout.Button("LoadDataFromText"))
+        {
+            LoadDataFromText();
+        }
+
+        GUILayout.Space(10);
 
         if (GUILayout.Button("SetScreenSize"))
         {
@@ -21,6 +38,65 @@ public class GameDataEditor : Editor
         }
 
         base.OnInspectorGUI();
+    }
+    public void SaveDataInText()
+    {
+        var gameData = target as GameData;
+        var fields = gameData.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var text = "";
+        foreach (var field in fields)
+        {
+            text += $"{field.Name} : {field.GetValue(gameData)}\n";
+        }
+        var path = gameData.DataPath.FullName + gameData.OptionsFileName;
+        File.WriteAllText(path, text);
+        AssetDatabase.Refresh();
+    }
+
+    public void LoadDataFromText()
+    {
+        var gameData = target as GameData;
+        var path = gameData.DataPath.FullName + gameData.OptionsFileName;
+        var text = File.ReadAllText(path);
+        var lines = text.Split('\n');
+        foreach (var line in lines)
+        {
+            var data = line.Split(':');
+            if (data.Length != 2) continue;
+            var fieldName = data[0].Trim();
+            var fieldValue = data[1].Trim();
+            var field = gameData.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (field != null)
+            {
+                if (field.FieldType == typeof(int))
+                {
+                    field.SetValue(gameData, int.Parse(fieldValue));
+                }
+                else if (field.FieldType == typeof(float))
+                {
+                    field.SetValue(gameData, float.Parse(fieldValue));
+                }
+                else if (field.FieldType == typeof(double))
+                {
+                    field.SetValue(gameData, double.Parse(fieldValue));
+                }
+                else if (field.FieldType == typeof(string))
+                {
+                    field.SetValue(gameData, fieldValue);
+                }
+                else if (field.FieldType == typeof(bool))
+                {
+                    field.SetValue(gameData, bool.Parse(fieldValue));
+                }
+                else if (field.FieldType == typeof(Vector2))
+                {
+                    var vector2 = fieldValue.Split(',');
+                    var x = float.Parse(vector2[0].Replace('(', ' ').Trim());
+                    var y = float.Parse(vector2[1].Replace(')', ' ').Trim());
+                    field.SetValue(gameData, new Vector2(x, y));
+                }
+            }
+        }
     }
 }
 
@@ -54,6 +130,8 @@ public class GameData : ScriptableObject
     [Header("Game Option")]
     public Utility.LogLevel LogLevel = Utility.LogLevel.Normal;
     public Vector2 ScreenSize = new(960, 250);
+    public DirectoryInfo DataPath = new(Application.dataPath + "/Resources/");
+    public string OptionsFileName = "GameData.txt";
 
     [Header("Game Object")]
     public Player PlayerPrefab;

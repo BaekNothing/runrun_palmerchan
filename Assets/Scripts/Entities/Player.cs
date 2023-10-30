@@ -72,6 +72,8 @@ public class Player : MonoBehaviour
 
     void CheckSupportObject()
     {
+        if (GameData.Instance.State != GameData.GameState.Play) return;
+
         if (_checkSupportDelay < GameData.Instance.CheckSupportObjectDelay) return;
         _checkSupportDelay = 0;
 

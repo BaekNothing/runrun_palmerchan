@@ -1,0 +1,24 @@
+LogLevel : Normal
+ScreenSize : (960.00, 250.00)
+DataPath : D:/work/unity/RUNRUN_PALMERCHAN/Assets/Resources/
+PlayerPrefab : Player (Player)
+BgObjectsPrefab : Dummy (BgObject)
+ObstaclePrefab : Objstacle (ObstacleObject)
+SupportObjectPrefab : Support (SupportObject)
+Mass : 1
+GravityScale : 4
+CheckSupportObjectRadius : 0.5
+CheckSupportObjectDelay : 0.5
+TimeLimit : 45
+SpeedMax : 10
+SpeedMin : 3
+SpeedIncreaseValue : 0.8
+SpeedDecreaseValue : 0.5
+PlayerPosX_L : -11
+PlayerPosX_R : -6
+PlayerPosY : 1
+PlayerPosZ : 0
+Speed : 6.5
+Score : 794.906857996363
+Timer : 16.08954
+State : Play

@@ -28,6 +28,13 @@ public class GamePlayManager : AbstractManager
         _gamePausedAction -= action;
         _gamePausedAction += action;
     }
+    static Action _gameOverAction;
+    public static void BindGameOverAction(Action action)
+    {
+        // prevent duplicate action
+        _gameOverAction -= action;
+        _gameOverAction += action;
+    }
 
     public override void Init()
     {
@@ -54,7 +61,8 @@ public class GamePlayManager : AbstractManager
 
     void BindKey()
     {
-        InputManager.BindKey(KeyCode.Space, GameStart, ActionWrapper.ActionType.Released);
+        // if this function binded keycode.space. it can make bug which is when player press space, game start and check supportitem at the same time.
+        InputManager.BindKey(KeyCode.None, GameStart, ActionWrapper.ActionType.Pressed);
         InputManager.BindKey(KeyCode.Escape, GamePaused, ActionWrapper.ActionType.Released);
     }
 
@@ -63,9 +71,9 @@ public class GamePlayManager : AbstractManager
         if (GameData.Instance.State == GameData.GameState.Play)
             return;
 
-
         if (GameData.Instance.State != GameData.GameState.Pause)
-            GameData.Instance.Init();
+            GameData.Instance.Init(); // it mean game first start
+
         GameData.Instance.State = GameData.GameState.Play;
         _gameStartAction?.Invoke();
 
@@ -83,8 +91,16 @@ public class GamePlayManager : AbstractManager
         Time.timeScale = 0;
     }
 
+    void GameOver()
+    {
+        GameData.Instance.State = GameData.GameState.GameOver;
+        _gameOverAction?.Invoke();
+        Time.timeScale = 0;
+    }
+
     void BindMouse()
     {
+        // if this function binded ActionType.Pressed. it can make bug which is when player press space, game start and check supportitem at the same time.
         InputManager.BindMouse(MouseButton.LeftMouse, GameStart, ActionWrapper.ActionType.Released);
     }
 
