@@ -9,6 +9,8 @@ public class PeriodicActionManager : AbstractManager
     [SerializeField] double _timer = 0;
     static readonly Dictionary<double, Action> _periodicAction = new();
 
+    public const double EVERY_FRAME = -1;
+
     public override void Init()
     {
         IsReady = true;
@@ -34,7 +36,11 @@ public class PeriodicActionManager : AbstractManager
 
         foreach (var action in _periodicAction)
         {
-            if (0 <= _timer % action.Key && _timer % action.Key < Time.deltaTime)
+            if (action.Key <= EVERY_FRAME)
+            {
+                action.Value.Invoke();
+            }
+            else if (0 <= _timer % action.Key && _timer % action.Key < Time.deltaTime)
             {
                 action.Value.Invoke();
             }

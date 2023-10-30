@@ -49,7 +49,7 @@ public class GamePlayManager : AbstractManager
 
     void BindPeriodicAction()
     {
-        PeriodicActionManager.BindPeriodicAction(Time.deltaTime, AddGameScore);
+        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, AddGameScore);
     }
 
     void AddGameScore()

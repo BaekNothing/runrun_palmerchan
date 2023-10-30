@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] float _checkSupportDelay = 0;
+    [SerializeField] Vector3 _positionBySpeed = Vector3.zero;
 
     enum PlayerCheckEffectState
     {
@@ -57,6 +58,9 @@ public class Player : MonoBehaviour
     {
         RB.gravityScale = GameData.Instance.GravityScale;
         RB.mass = GameData.Instance.Mass;
+        _positionBySpeed.x = GameData.Instance.PlayerPosX_L;
+        _positionBySpeed.y = GameData.Instance.PlayerPosY;
+        _positionBySpeed.z = GameData.Instance.PlayerPosZ;
     }
 
     void BindKey()
@@ -77,17 +81,22 @@ public class Player : MonoBehaviour
 
             EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
             GameData.Instance.Speed += GameData.Instance.SpeedIncreaseValue;
+            GameData.Instance.Speed = Mathf.Min(GameData.Instance.Speed, GameData.Instance.SpeedMax);
+
             Utility.Log("Speed: " + GameData.Instance.Speed, Utility.LogLevel.Verbose);
         }
         else
         {
             EffectController.PlayEffect((int)PlayerCheckEffectState.MISS);
+            GameData.Instance.Speed -= GameData.Instance.SpeedDecreaseValue;
+            GameData.Instance.Speed = Mathf.Max(GameData.Instance.Speed, GameData.Instance.SpeedMin);
         }
     }
 
     void BindPeriodicAction()
     {
-        PeriodicActionManager.BindPeriodicAction(Time.deltaTime, IncreaseCheckSupportDelay);
+        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, IncreaseCheckSupportDelay);
+        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, SetPositionBySpeed);
     }
 
     void IncreaseCheckSupportDelay()
@@ -95,4 +104,19 @@ public class Player : MonoBehaviour
         _checkSupportDelay += Time.deltaTime;
     }
 
+    //
+    void SetPositionBySpeed()
+    {
+        _positionBySpeed.x = Mathf.Lerp(
+            GameData.Instance.PlayerPosX_L,
+            GameData.Instance.PlayerPosX_R,
+            (GameData.Instance.Speed - GameData.Instance.SpeedMin) /
+            (GameData.Instance.SpeedMax - GameData.Instance.SpeedMin));
+
+        // move smoothly
+        transform.position = Vector3.Lerp(
+            transform.position,
+            _positionBySpeed,
+            Time.deltaTime * 10 * GameData.Instance.CheckSupportObjectDelay);
+    }
 }

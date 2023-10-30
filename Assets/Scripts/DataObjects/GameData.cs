@@ -71,6 +71,11 @@ public class GameData : ScriptableObject
     public float SpeedMax = 10;
     public float SpeedMin = 3;
     public float SpeedIncreaseValue = 0.5f;
+    public float SpeedDecreaseValue = 0.5f;
+    public float PlayerPosX_L = -11f;
+    public float PlayerPosX_R = -6f;
+    public float PlayerPosY = 1f;
+    public float PlayerPosZ = 0f;
 
     [Header("Mutable Value")]
     public float Speed = 1;
