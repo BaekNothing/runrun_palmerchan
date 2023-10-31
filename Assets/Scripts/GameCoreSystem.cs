@@ -14,6 +14,7 @@ public class GameCoreSystem : MonoBehaviour
     [SerializeField] ObjectsManager _objectsManager = new();
     [SerializeField] InputManager _inputManager = new();
     [SerializeField] GamePlayManager _gamePlayManager = new();
+    public GamePlayManager GamePlayManager { get => _gamePlayManager; }
 
     void Awake()
     {
@@ -31,13 +32,12 @@ public class GameCoreSystem : MonoBehaviour
 
     void Update()
     {
+        Utility.Log("GameCoreSystem.Update()");
         if (!CheckAllManagerAreReady())
             return;
 
+        Utility.Log("GameCoreSystem.Update() - All managers are ready.");
         _periodicActionManager.UpdateAction();
-        _objectsManager.UpdateAction();
-        _inputManager.UpdateAction();
-        _gamePlayManager.UpdateAction();
     }
 
     bool CheckAllManagerAreReady()

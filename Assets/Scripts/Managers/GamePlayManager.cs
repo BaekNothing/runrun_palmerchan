@@ -101,7 +101,7 @@ public class GamePlayManager : AbstractManager
         Time.timeScale = 1;
     }
 
-    void GamePaused()
+    public void GamePaused()
     {
         if (GameData.Instance.State == GameData.GameState.Pause)
             return;
@@ -139,10 +139,11 @@ public class GamePlayManager : AbstractManager
     void AddTimer()
     {
         GameData.Instance.Timer += Time.deltaTime;
-    }
 
-    public override void UpdateAction()
-    {
-
+        if (GameData.Instance.State == GameData.GameState.Play &&
+            GameData.Instance.Timer > GameData.Instance.TimeLimit)
+        {
+            GameOver();
+        }
     }
 }

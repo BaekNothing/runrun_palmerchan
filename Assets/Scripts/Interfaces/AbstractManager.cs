@@ -13,5 +13,4 @@ public abstract class AbstractManager
     public abstract void Init();
     [SerializeField] bool _isReady = false;
     public bool IsReady { get => _isReady; protected set => _isReady = value; }
-    public abstract void UpdateAction();
 }

@@ -12,7 +12,15 @@ public class InputManager : AbstractManager
 
     public override void Init()
     {
+        BindPeriodicAction();
         IsReady = true;
+    }
+
+    void BindPeriodicAction()
+    {
+        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, InputKey);
+        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, InputAnyKey);
+        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, InputMouse);
     }
 
     static readonly Dictionary<KeyCode, List<ActionWrapper>> _keyBindings = new();
@@ -105,13 +113,6 @@ public class InputManager : AbstractManager
         {
             _mouseBindings.Remove(button);
         }
-    }
-
-    public override void UpdateAction()
-    {
-        InputKey();
-        InputAnyKey();
-        InputMouse();
     }
 
     void InputKey()

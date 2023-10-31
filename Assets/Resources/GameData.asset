@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   LogLevel: 1
-  ScreenSize: {x: 920, y: 250}
+  ScreenSize: {x: 920, y: 260}
+  orthographicSize: 5
   OptionsFileName: GameData.txt
   PlayerPrefab: {fileID: 178517530651483384, guid: ccb501efcbef4a7429462965c77658ee, type: 3}
   BgObjectsPrefab: {fileID: 6965412290759755650, guid: c2d3b328496a798409e15acbcd3e1fc4, type: 3}
@@ -32,7 +33,7 @@ MonoBehaviour:
   PlayerPosX_R: -6
   PlayerPosY: 1
   PlayerPosZ: 0
-  Speed: 3
-  Score: 0
-  Timer: 0
-  State: 0
+  Speed: 3.8
+  Score: 526.0971205282765
+  Timer: 16.655758
+  State: 1

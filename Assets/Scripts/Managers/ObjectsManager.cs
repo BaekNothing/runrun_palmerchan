@@ -25,7 +25,7 @@ public class ObjectsManager : AbstractManager
     public override void Init()
     {
         SetObject();
-        PeriodicActionManager.BindPeriodicAction(3.0, ActiveSupportObject);
+        BindPeriodicAction();
         IsReady = true;
     }
 
@@ -51,9 +51,10 @@ public class ObjectsManager : AbstractManager
         }
     }
 
-    public override void UpdateAction()
+    void BindPeriodicAction()
     {
-        MoveLeft();
+        PeriodicActionManager.BindPeriodicAction(3.0, ActiveSupportObject);
+        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, MoveLeft);
     }
 
     void MoveLeft()

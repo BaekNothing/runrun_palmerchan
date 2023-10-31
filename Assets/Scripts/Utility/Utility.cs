@@ -8,7 +8,7 @@ public static class Utility
     public const string TAG_PLAYER = "Player";
     public const string TAG_SUPPORT = "Support";
     public const string TAG_RESPAWN = "Respawn";
-    public const string SCORE_FORMAT = "00000000000000";
+    public const string SCORE_FORMAT = "000000000";
 
     public enum LogLevel
     {
