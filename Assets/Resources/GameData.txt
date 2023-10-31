@@ -1,6 +1,8 @@
 LogLevel : Normal
-ScreenSize : (960.00, 250.00)
+ScreenSize : (920.00, 260.00)
+orthographicSize : 5
 DataPath : D:/work/unity/RUNRUN_PALMERCHAN/Assets/Resources/
+OptionsFileName : GameData.txt
 PlayerPrefab : Player (Player)
 BgObjectsPrefab : Dummy (BgObject)
 ObstaclePrefab : Objstacle (ObstacleObject)
@@ -18,7 +20,7 @@ PlayerPosX_L : -11
 PlayerPosX_R : -6
 PlayerPosY : 1
 PlayerPosZ : 0
-Speed : 6.5
-Score : 794.906857996363
-Timer : 16.08954
+Speed : 3.8
+Score : 526.097120528276
+Timer : 16.65576
 State : Play

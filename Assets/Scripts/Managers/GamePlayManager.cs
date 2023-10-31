@@ -36,6 +36,18 @@ public class GamePlayManager : AbstractManager
         _gameOverAction += action;
     }
 
+    [SerializeField] Camera _mainCamera;
+    public Camera MainCamera
+    {
+        get
+        {
+            if (_mainCamera == null)
+                _mainCamera = Camera.main;
+            return _mainCamera;
+        }
+    }
+
+
     public override void Init()
     {
         InitGame();
@@ -49,6 +61,15 @@ public class GamePlayManager : AbstractManager
     void InitGame()
     {
         Application.targetFrameRate = 60;
+        float currentRatio = (float)Screen.height / (float)Screen.width;
+        float ratio = (GameData.Instance.ScreenSize.y / GameData.Instance.ScreenSize.x);
+
+        // ratio : orthographicSize = currentRatio : x
+        // x = orthographicSize * currentRatio / ratio
+
+        // keep show same horizontal size
+        MainCamera.orthographicSize = GameData.Instance.orthographicSize * currentRatio / ratio;
+
         BindKey();
         BindMouse();
         BindPeriodicAction();

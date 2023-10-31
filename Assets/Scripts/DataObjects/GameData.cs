@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using System.IO;
-using System;
-
-
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -130,6 +127,7 @@ public class GameData : ScriptableObject
     [Header("Game Option")]
     public Utility.LogLevel LogLevel = Utility.LogLevel.Normal;
     public Vector2 ScreenSize = new(960, 250);
+    public float orthographicSize = 5.0f;
     public DirectoryInfo DataPath = new(Application.dataPath + "/Resources/");
     public string OptionsFileName = "GameData.txt";
 
