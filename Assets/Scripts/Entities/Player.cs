@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] float _checkSupportDelay = 0;
+    public void SetSupportDelay(float delay) => _checkSupportDelay = delay;
+
     [SerializeField] Vector3 _positionBySpeed = Vector3.zero;
 
     enum PlayerCheckEffectState
@@ -48,11 +50,17 @@ public class Player : MonoBehaviour
         PERFECT
     }
 
-    void Start()
+    void Awake()
     {
         SetData();
+        BindGameAction();
         BindKey();
         BindPeriodicAction();
+    }
+
+    void BindGameAction()
+    {
+        GamePlayManager.BindGameStartAction(() => SetSupportDelay(GameData.Instance.CheckSupportObjectDelay / 2));
     }
 
     public void SetData()
@@ -72,28 +80,37 @@ public class Player : MonoBehaviour
 
     void CheckSupportObject()
     {
-        if (GameData.Instance.State != GameData.GameState.Play) return;
+        if (GameData.Instance.State != GameData.GameState.Play)
+            return;
 
-        if (_checkSupportDelay < GameData.Instance.CheckSupportObjectDelay) return;
-        _checkSupportDelay = 0;
+        if (Utility.CheckGameIsPaused())
+            return;
+
+        if (_checkSupportDelay < GameData.Instance.CheckSupportObjectDelay)
+            return;
+        SetSupportDelay(0);
 
         if (Physics2D.OverlapCircle(transform.position,
             GameData.Instance.CheckSupportObjectRadius * (GameData.Instance.Speed - GameData.Instance.SpeedMin) * 0.5f
             , LayerMask.GetMask("SupportObjects")))
         {
             // if player check support object, reset check delay
-            _checkSupportDelay = GameData.Instance.CheckSupportObjectDelay;
+            SetSupportDelay(GameData.Instance.CheckSupportObjectDelay);
 
             EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
-            GameData.Instance.Speed += GameData.Instance.SpeedIncreaseValue;
-            GameData.Instance.Speed = Mathf.Min(GameData.Instance.Speed, GameData.Instance.SpeedMax);
+            GameData.Instance.SetSpeed(
+                Mathf.Min( // speed can't be over than speed max
+                    GameData.Instance.SpeedIncreaseValue + GameData.Instance.Speed,
+                    GameData.Instance.SpeedMax));
             Utility.Log("Speed: " + GameData.Instance.Speed, Utility.LogLevel.Verbose);
         }
         else
         {
             EffectController.PlayEffect((int)PlayerCheckEffectState.MISS);
-            GameData.Instance.Speed -= GameData.Instance.SpeedDecreaseValue;
-            GameData.Instance.Speed = Mathf.Max(GameData.Instance.Speed, GameData.Instance.SpeedMin);
+            GameData.Instance.SetSpeed(
+                Mathf.Max( // speed can't be lower than speed min
+                    GameData.Instance.Speed - GameData.Instance.SpeedDecreaseValue,
+                    GameData.Instance.SpeedMin));
         }
     }
 

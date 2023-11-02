@@ -1,20 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-[DisallowMultipleComponent]
 /// <summary>
 /// GameCoreSystem is just Start and Update.
 /// It's a manager of managers.
 /// If you want to add a new manager, you should add it to GameCoreSystemManager.
 /// </summary>
+[DisallowMultipleComponent]
+[RequireComponent(typeof(EventSystem))]
 public class GameCoreSystem : MonoBehaviour
 {
     [SerializeField] PeriodicActionManager _periodicActionManager = new();
     [SerializeField] ObjectsManager _objectsManager = new();
     [SerializeField] InputManager _inputManager = new();
     [SerializeField] GamePlayManager _gamePlayManager = new();
-    public GamePlayManager GamePlayManager { get => _gamePlayManager; }
+
 
     void Awake()
     {
@@ -35,6 +37,8 @@ public class GameCoreSystem : MonoBehaviour
         Utility.Log("GameCoreSystem.Update()");
         if (!CheckAllManagerAreReady())
             return;
+        if (Utility.CheckGameIsPaused())
+            return;
 
         Utility.Log("GameCoreSystem.Update() - All managers are ready.");
         _periodicActionManager.UpdateAction();
@@ -48,4 +52,5 @@ public class GameCoreSystem : MonoBehaviour
             _inputManager.IsReady &&
             _gamePlayManager.IsReady;
     }
+
 }

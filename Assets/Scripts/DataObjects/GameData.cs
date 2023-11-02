@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using System.IO;
+using System;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -130,6 +132,7 @@ public class GameData : ScriptableObject
     public float orthographicSize = 5.0f;
     public DirectoryInfo DataPath = new(Application.dataPath + "/Resources/");
     public string OptionsFileName = "GameData.txt";
+    public float PauseDealy = 0.5f;
 
     [Header("Game Object")]
     public Player PlayerPrefab;
@@ -160,6 +163,13 @@ public class GameData : ScriptableObject
     public double Score = 0;
     public float Timer = 0;
     public GameState State = GameState.Ready;
+    public DateTime PausedTime = DateTime.MinValue;
+
+    public void SetSpeed(float speed) => Speed = speed;
+    public void SetScore(double score) => Score = score;
+    public void SetTimer(float timer) => Timer = timer;
+    public void SetState(GameState state) => State = state;
+    public void SetPausedTime(DateTime pausedTime) => PausedTime = pausedTime;
 
     public void Init()
     {
@@ -167,5 +177,6 @@ public class GameData : ScriptableObject
         Score = 0;
         Timer = 0;
         State = GameState.Ready;
+        PausedTime = DateTime.MinValue;
     }
 }

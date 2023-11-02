@@ -18,8 +18,8 @@ public class InputManager : AbstractManager
 
     void BindPeriodicAction()
     {
-        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, InputKey);
         PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, InputAnyKey);
+        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, InputKey);
         PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, InputMouse);
     }
 

@@ -52,6 +52,7 @@ public class GamePlayManager : AbstractManager
     {
         InitGame();
         InitData();
+        InitUIAction();
 
         _initAction?.Invoke();
 
@@ -75,16 +76,11 @@ public class GamePlayManager : AbstractManager
         BindPeriodicAction();
     }
 
-    void InitData()
-    {
-        GameData.Instance.Init();
-    }
-
     void BindKey()
     {
         // if this function binded keycode.space. it can make bug which is when player press space, game start and check supportitem at the same time.
         InputManager.BindKey(KeyCode.None, GameStart, ActionWrapper.ActionType.Pressed);
-        InputManager.BindKey(KeyCode.Escape, GamePaused, ActionWrapper.ActionType.Released);
+        InputManager.BindKey(KeyCode.Escape, GamePaused, ActionWrapper.ActionType.Pressed);
     }
 
     void GameStart()
@@ -95,10 +91,10 @@ public class GamePlayManager : AbstractManager
         if (GameData.Instance.State != GameData.GameState.Pause)
             GameData.Instance.Init(); // it mean game first start
 
-        GameData.Instance.State = GameData.GameState.Play;
         _gameStartAction?.Invoke();
+        Utility.ResumeGame();
 
-        Time.timeScale = 1;
+        GameData.Instance.State = GameData.GameState.Play;
     }
 
     public void GamePaused()
@@ -109,14 +105,7 @@ public class GamePlayManager : AbstractManager
         GameData.Instance.State = GameData.GameState.Pause;
         _gamePausedAction?.Invoke();
 
-        Time.timeScale = 0;
-    }
-
-    void GameOver()
-    {
-        GameData.Instance.State = GameData.GameState.GameOver;
-        _gameOverAction?.Invoke();
-        Time.timeScale = 0;
+        Utility.PauseGame();
     }
 
     void BindMouse()
@@ -145,5 +134,23 @@ public class GamePlayManager : AbstractManager
         {
             GameOver();
         }
+    }
+
+    void GameOver()
+    {
+        GameData.Instance.State = GameData.GameState.GameOver;
+        _gameOverAction?.Invoke();
+
+        Utility.PauseGame();
+    }
+
+    void InitData()
+    {
+        GameData.Instance.Init();
+    }
+
+    void InitUIAction()
+    {
+        UIActtionHandler.BindPauseAction(GamePaused);
     }
 }

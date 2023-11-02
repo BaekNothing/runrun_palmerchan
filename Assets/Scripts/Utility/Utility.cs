@@ -46,6 +46,21 @@ public static class Utility
         {
             Debug.Log(message);
         }
+    }
 
+    public static void PauseGame()
+    {
+        GameData.Instance.SetPausedTime(System.DateTime.Now);
+        Time.timeScale = 0;
+    }
+
+    public static void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
+
+    public static bool CheckGameIsPaused()
+    {
+        return GameData.Instance.PausedTime.AddSeconds(GameData.Instance.PauseDealy) >= System.DateTime.Now;
     }
 }
