@@ -78,7 +78,8 @@ public class Player : MonoBehaviour
         _checkSupportDelay = 0;
 
         if (Physics2D.OverlapCircle(transform.position,
-            GameData.Instance.CheckSupportObjectRadius, LayerMask.GetMask("SupportObjects")))
+            GameData.Instance.CheckSupportObjectRadius * (GameData.Instance.Speed - GameData.Instance.SpeedMin) * 0.5f
+            , LayerMask.GetMask("SupportObjects")))
         {
             // if player check support object, reset check delay
             _checkSupportDelay = GameData.Instance.CheckSupportObjectDelay;
