@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -70,6 +71,16 @@ public class Player : MonoBehaviour
         _positionBySpeed.x = GameData.Instance.PlayerPosX_L;
         _positionBySpeed.y = GameData.Instance.PlayerPosY;
         _positionBySpeed.z = GameData.Instance.PlayerPosZ;
+
+        EffectController.BindCutInIsOn(IsCutInActive);
+    }
+
+    bool IsCutInActive(int index)
+    {
+        if (index == (int)PlayerCheckEffectState.PERFECT)
+            return true;
+        else
+            return false;
     }
 
     void BindKey()
@@ -90,14 +101,25 @@ public class Player : MonoBehaviour
             return;
         SetSupportDelay(0);
 
-        if (Physics2D.OverlapCircle(transform.position,
+        var supportObject = Physics2D.OverlapCircle(transform.position,
             GameData.Instance.CheckSupportObjectRadius * (GameData.Instance.Speed - GameData.Instance.SpeedMin) * 0.5f
-            , LayerMask.GetMask("SupportObjects")))
+            , LayerMask.GetMask("SupportObjects"));
+
+        if (supportObject)
         {
             // if player check support object, reset check delay
             SetSupportDelay(GameData.Instance.CheckSupportObjectDelay);
 
-            EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
+            var supportType = supportObject.GetComponent<SupportObject>()?.GetSupportType();
+            if (supportType == SupportObject.SupportType.Common)
+            {
+                EffectController.PlayEffect((int)PlayerCheckEffectState.GREAT);
+            }
+            else
+            {
+                EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
+            }
+
             GameData.Instance.SetSpeed(
                 Mathf.Min( // speed can't be over than speed max
                     GameData.Instance.SpeedIncreaseValue + GameData.Instance.Speed,

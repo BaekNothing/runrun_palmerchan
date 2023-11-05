@@ -34,13 +34,11 @@ public class GameCoreSystem : MonoBehaviour
 
     void Update()
     {
-        Utility.Log("GameCoreSystem.Update()");
         if (!CheckAllManagerAreReady())
             return;
         if (Utility.CheckGameIsPaused())
             return;
 
-        Utility.Log("GameCoreSystem.Update() - All managers are ready.");
         _periodicActionManager.UpdateAction();
     }
 

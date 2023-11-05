@@ -16,6 +16,7 @@ MonoBehaviour:
   ScreenSize: {x: 920, y: 260}
   orthographicSize: 5
   OptionsFileName: GameData.txt
+  PauseDealy: 0.5
   PlayerPrefab: {fileID: 178517530651483384, guid: ccb501efcbef4a7429462965c77658ee, type: 3}
   BgObjectsPrefab: {fileID: 6965412290759755650, guid: c2d3b328496a798409e15acbcd3e1fc4, type: 3}
   ObstaclePrefab: {fileID: 695711878000760049, guid: 30578c6b9f483704ea6e8ae8ee7a8892, type: 3}
@@ -33,7 +34,7 @@ MonoBehaviour:
   PlayerPosX_R: -6
   PlayerPosY: 1
   PlayerPosZ: 0
-  Speed: 3.8
-  Score: 526.0971205282765
-  Timer: 16.655758
+  Speed: 6.5000005
+  Score: 796.3335326423928
+  Timer: 16.776073
   State: 1

@@ -175,3 +175,4 @@ MonoBehaviour:
   _collider2D: {fileID: 5048329297713821197}
   _spriteRenderer: {fileID: 2251956350897772331}
   _resetPoint: {fileID: 0}
+  _supportType: 0

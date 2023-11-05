@@ -57,12 +57,13 @@ public abstract class AbstractCutIn : MonoBehaviour
 
     public async void CutIn()
     {
+        Utility.PauseGame();
         PrevAction();
 
         Timer = 0f;
         while (Timer < Duration)
         {
-            Timer += Time.deltaTime;
+            Timer += Time.fixedDeltaTime;
             Move(CalcMove(StartPosition, Direction, Timer, Duration));
             await Task.Yield();
         }
@@ -75,7 +76,7 @@ public abstract class AbstractCutIn : MonoBehaviour
         Timer = 0f;
         while (Timer < Duration)
         {
-            Timer += Time.deltaTime;
+            Timer += Time.fixedDeltaTime;
             Move(CalcMove(StartPosition, Direction, Duration - Timer, Duration));
             await Task.Yield();
         }
@@ -83,6 +84,9 @@ public abstract class AbstractCutIn : MonoBehaviour
 
         EndAction();
         gameObject.SetActive(false);
+
+        if (GameData.Instance.State == GameData.GameState.Play)
+            Utility.ResumeGame();
     }
 
     Vector2 CalcMove(Vector2 startPosition, Vector2 direction, float timer, float duration)

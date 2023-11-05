@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class SupportObject : AbstractObject
 {
+    [SerializeField] SupportType _supportType = 0;
+    public SupportType GetSupportType() => _supportType;
+
+    public enum SupportType
+    {
+        Common,
+        Hyper
+    }
+
     public override void Init(float depth, Transform resetPoint)
     {
         _depth = depth;
@@ -33,5 +42,8 @@ public class SupportObject : AbstractObject
     {
         var delayOffset = UnityEngine.Random.Range(0.0f, 120f);
         gameObject.transform.position = _resetPoint.position + new Vector3(delayOffset, 0, _depth);
+        _supportType = (SupportType)UnityEngine.Random.Range(0, 2);
+
+        _spriteRenderer.color = _supportType == SupportType.Common ? Color.yellow : Color.blue;
     }
 }
