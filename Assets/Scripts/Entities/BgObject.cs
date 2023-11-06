@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class BgObject : AbstractObject
 {
-    public override void Init(float depth, Transform resetPoint)
+    public override void Init(float depth)
     {
         _depth = depth;
-        _resetPoint = resetPoint;
 
-        _spriteRenderer.sortingOrder = (int)(-depth * 100);
+        _spriteRenderer.sortingOrder = (int)(-depth);
         _spriteRenderer.material.color = new Color(1, 1, 1, depth);
         transform.localScale = new Vector3(0.8f + (1 - depth) * 3, 0.8f + (1 - depth) * 3, 1);
 
-        ResetPosition();
+        Reset();
     }
 
     public override void Move(Vector2 direction)
@@ -29,14 +28,15 @@ public class BgObject : AbstractObject
     {
         if (other.gameObject.tag == "Finish")
         {
-            ResetPosition();
+            Reset();
             Utility.Log("ResetPosition", Utility.LogLevel.Verbose);
         }
     }
 
-    public void ResetPosition()
+    public override void SetPositionOffset()
     {
-        var delayOffset = UnityEngine.Random.Range(0.0f, 120f);
-        gameObject.transform.position = _resetPoint.position + new Vector3(delayOffset, 0, _depth);
+        var delayOffset = UnityEngine.Random.Range(
+            ObjectData.Instance.BgObjectRandomRange.x, ObjectData.Instance.BgObjectRandomRange.y);
+        gameObject.transform.position += new Vector3(delayOffset, 0, 0);
     }
 }

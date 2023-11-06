@@ -134,20 +134,13 @@ public class GameData : ScriptableObject
     public string OptionsFileName = "GameData.txt";
     public float PauseDealy = 0.5f;
 
-    [Header("Game Object")]
-    public Player PlayerPrefab;
-    public BgObject BgObjectsPrefab;
-    public ObstacleObject ObstaclePrefab;
-    public SupportObject SupportObjectPrefab;
-
     [Header("Immutable Value")]
-    public float Mass = 1;
-    public float GravityScale = 4;
-
-    public float CheckSupportObjectRadius = 0.5f;
-    public float CheckSupportObjectDelay = 0.5f;
-
     public float TimeLimit = 30;
+
+    public float CheckSupportObjectDelay = 0.5f;
+    public float CheckSupportObjectRadius = 0.5f;
+    public float DashMaxTime = 3f;
+    public float DashMaxSpeed = 20f;
 
     public float SpeedMax = 10;
     public float SpeedMin = 3;
@@ -159,17 +152,30 @@ public class GameData : ScriptableObject
     public float PlayerPosZ = 0f;
 
     [Header("Mutable Value")]
+    public float PrevSpeed = 1;
     public float Speed = 1;
     public double Score = 0;
     public float Timer = 0;
     public GameState State = GameState.Ready;
     public DateTime PausedTime = DateTime.MinValue;
+    public float DashTime = 0;
 
     public void SetSpeed(float speed) => Speed = speed;
     public void SetScore(double score) => Score = score;
     public void SetTimer(float timer) => Timer = timer;
     public void SetState(GameState state) => State = state;
     public void SetPausedTime(DateTime pausedTime) => PausedTime = pausedTime;
+
+    public void StartDash()
+    {
+        DashTime = DashMaxTime;
+        PrevSpeed = Speed;
+        Speed = DashMaxSpeed;
+    }
+    public void EndDash()
+    {
+        Speed = PrevSpeed;
+    }
 
     public void Init()
     {

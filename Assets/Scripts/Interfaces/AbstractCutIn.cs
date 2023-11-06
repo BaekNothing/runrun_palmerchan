@@ -71,7 +71,14 @@ public abstract class AbstractCutIn : MonoBehaviour
 
         int waitTime = (int)(Wait * 1000);
         WaitAction(waitTime);
-        await Task.Delay(waitTime);
+
+        Timer = 0f;
+        while (Timer < Duration)
+        {
+            // Thread Delay and Sleep were not work in webgl
+            Timer += Time.fixedDeltaTime;
+            await Task.Yield();
+        }
 
         Timer = 0f;
         while (Timer < Duration)

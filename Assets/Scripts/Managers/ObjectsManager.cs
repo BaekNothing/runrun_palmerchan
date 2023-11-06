@@ -8,19 +8,6 @@ using UnityEngine;
 public class ObjectsManager : AbstractManager
 {
     public List<AbstractObject> _objects = new();
-    [SerializeField] Transform _resetPosition;
-    public Transform ResetPosition
-    {
-        get
-        {
-            if (_resetPosition == null)
-            {
-                _resetPosition = GameObject.FindGameObjectWithTag(Utility.TAG_RESPAWN)?.transform;
-            }
-            return _resetPosition;
-        }
-    }
-
 
     public override void Init()
     {
@@ -31,29 +18,28 @@ public class ObjectsManager : AbstractManager
 
     void SetObject()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < ObjectData.Instance.BgObjectMaxCount; i++)
         {
-            var RandomDepth = UnityEngine.Random.Range(0.2f, 1.0f);
+            var RandomDepth = UnityEngine.Random.Range(
+                ObjectData.Instance.BgObjectDepthRange.x,
+                ObjectData.Instance.BgObjectDepthRange.y
+            );
             CreateObjectByPrefab<BgObject>(
-                GameData.Instance.BgObjectsPrefab, RandomDepth);
+                ObjectData.Instance.BgObjectsPrefab, RandomDepth);
         }
 
-        for (int i = 0; i < 3; i++)
-        {
-            CreateObjectByPrefab<ObstacleObject>(
-                GameData.Instance.ObstaclePrefab, 1.0f);
-        }
-
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < ObjectData.Instance.SupportObjectMaxCount; i++)
         {
             CreateObjectByPrefab<SupportObject>(
-                GameData.Instance.SupportObjectPrefab, 1.0f);
+                ObjectData.Instance.SupportObjectPrefab,
+                ObjectData.Instance.SupportObjectDepth
+            );
         }
     }
 
     void BindPeriodicAction()
     {
-        PeriodicActionManager.BindPeriodicAction(3.0, ActiveSupportObject);
+        PeriodicActionManager.BindPeriodicAction(ObjectData.Instance.SupportObjectCreateDelay, ActiveSupportObject);
         PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, MoveLeft);
     }
 
@@ -70,13 +56,19 @@ public class ObjectsManager : AbstractManager
     public void CreateObjectByPrefab<T>(AbstractObject prefab, float depth) where T : AbstractObject
     {
         var target = UnityEngine.Object.Instantiate(prefab.gameObject).GetComponent<T>();
-        target.Init(depth, ResetPosition);
+        target.Init(depth);
         _objects.Add(target);
     }
 
     public void ActiveSupportObject()
     {
-        var target = _objects.Where(x => x.gameObject.activeSelf == false).FirstOrDefault();
-        target?.gameObject.SetActive(true);
+        if (GameData.Instance.DashTime > 0) return;
+
+        if (ObjectData.Instance.CheckSupportObject())
+        {
+            var target = _objects.Where(x => !x?.gameObject?.activeSelf ?? false).FirstOrDefault();
+            target?.Reset();
+            target?.gameObject.SetActive(true);
+        }
     }
 }

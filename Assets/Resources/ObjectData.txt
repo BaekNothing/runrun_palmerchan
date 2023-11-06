@@ -1,0 +1,13 @@
+DataPath : D:/work/unity/RUNRUN_PALMERCHAN/Assets/Resources/
+OptionsFileName : ObjectData.txt
+PlayerPrefab : Player (Player)
+BgObjectsPrefab : Dummy (BgObject)
+ObstaclePrefab : Objstacle (ObstacleObject)
+SupportObjectPrefab : Support (SupportObject)
+Mass : 1
+GravityScale : 4
+ResetPosition : (20.00, 0.00)
+CheckSupportObjectRadius : 0.5
+CheckSupportObjectDelay : 0.5
+SupportObjectMaxCount : 4
+SupportObjectCreateDelay : 3

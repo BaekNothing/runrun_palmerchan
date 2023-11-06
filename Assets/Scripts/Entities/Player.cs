@@ -61,13 +61,13 @@ public class Player : MonoBehaviour
 
     void BindGameAction()
     {
-        GamePlayManager.BindGameStartAction(() => SetSupportDelay(GameData.Instance.CheckSupportObjectDelay / 2));
+        // bind game start action
+        float startDelay = GameData.Instance.CheckSupportObjectDelay / 2;
+        GamePlayManager.BindGameStartAction(() => SetSupportDelay(startDelay));
     }
 
     public void SetData()
     {
-        RB.gravityScale = GameData.Instance.GravityScale;
-        RB.mass = GameData.Instance.Mass;
         _positionBySpeed.x = GameData.Instance.PlayerPosX_L;
         _positionBySpeed.y = GameData.Instance.PlayerPosY;
         _positionBySpeed.z = GameData.Instance.PlayerPosZ;
@@ -113,18 +113,12 @@ public class Player : MonoBehaviour
             var supportType = supportObject.GetComponent<SupportObject>()?.GetSupportType();
             if (supportType == SupportObject.SupportType.Common)
             {
-                EffectController.PlayEffect((int)PlayerCheckEffectState.GREAT);
+                SupportAction_SpeedUp();
             }
             else
             {
-                EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
+                SupportAction_Dash();
             }
-
-            GameData.Instance.SetSpeed(
-                Mathf.Min( // speed can't be over than speed max
-                    GameData.Instance.SpeedIncreaseValue + GameData.Instance.Speed,
-                    GameData.Instance.SpeedMax));
-            Utility.Log("Speed: " + GameData.Instance.Speed, Utility.LogLevel.Verbose);
         }
         else
         {
@@ -136,10 +130,39 @@ public class Player : MonoBehaviour
         }
     }
 
+    void SupportAction_SpeedUp()
+    {
+        EffectController.PlayEffect((int)PlayerCheckEffectState.GREAT);
+        GameData.Instance.SetSpeed(
+        Mathf.Min( // speed can't be over than speed max
+            GameData.Instance.SpeedIncreaseValue + GameData.Instance.Speed,
+            GameData.Instance.SpeedMax));
+        Utility.Log("Speed: " + GameData.Instance.Speed, Utility.LogLevel.Verbose);
+    }
+
+    void SupportAction_Dash()
+    {
+        EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
+        GameData.Instance.StartDash();
+    }
+
+    void CheckDashEnd()
+    {
+        if (GameData.Instance.Speed == GameData.Instance.DashMaxSpeed)
+        {
+            GameData.Instance.DashTime -= Time.deltaTime;
+            if (GameData.Instance.DashTime <= 0)
+            {
+                GameData.Instance.EndDash();
+            }
+        }
+    }
+
     void BindPeriodicAction()
     {
         PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, IncreaseCheckSupportDelay);
         PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, SetPositionBySpeed);
+        PeriodicActionManager.BindPeriodicAction(PeriodicActionManager.EVERY_FRAME, CheckDashEnd);
     }
 
     void IncreaseCheckSupportDelay()
@@ -156,9 +179,11 @@ public class Player : MonoBehaviour
             (GameData.Instance.SpeedMax - GameData.Instance.SpeedMin));
 
         // move smoothly
+        const int FASTER = 10; // higher value, faster
+
         transform.position = Vector3.Lerp(
             transform.position,
             _positionBySpeed,
-            Time.deltaTime * 10 * GameData.Instance.CheckSupportObjectDelay);
+            Time.deltaTime * FASTER * GameData.Instance.CheckSupportObjectDelay);
     }
 }

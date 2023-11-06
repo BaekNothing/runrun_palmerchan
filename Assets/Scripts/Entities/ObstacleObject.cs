@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class ObstacleObject : AbstractObject
 {
-    public override void Init(float depth, Transform resetPoint)
+    public override void Init(float depth)
     {
         _depth = depth;
-        _resetPoint = resetPoint;
-        ResetPosition();
+        Reset();
     }
 
     public override void Move(Vector2 direction)
@@ -23,7 +22,7 @@ public class ObstacleObject : AbstractObject
     {
         if (other.gameObject.tag == "Finish")
         {
-            ResetPosition();
+            Reset();
             Utility.Log("ResetPosition", Utility.LogLevel.Verbose);
         }
         else if (other.gameObject.tag == "Player")
@@ -32,9 +31,10 @@ public class ObstacleObject : AbstractObject
         }
     }
 
-    public void ResetPosition()
+    public override void SetPositionOffset()
     {
-        var delayOffset = UnityEngine.Random.Range(0.0f, 120f);
-        gameObject.transform.position = _resetPoint.position + new Vector3(delayOffset, 0, _depth);
+        var delayOffset = Random.Range(0.0f, 120f);
+        gameObject.transform.position += new Vector3(delayOffset, 0, 0);
     }
+
 }

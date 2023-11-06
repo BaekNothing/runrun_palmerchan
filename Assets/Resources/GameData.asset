@@ -17,24 +17,22 @@ MonoBehaviour:
   orthographicSize: 5
   OptionsFileName: GameData.txt
   PauseDealy: 0.5
-  PlayerPrefab: {fileID: 178517530651483384, guid: ccb501efcbef4a7429462965c77658ee, type: 3}
-  BgObjectsPrefab: {fileID: 6965412290759755650, guid: c2d3b328496a798409e15acbcd3e1fc4, type: 3}
-  ObstaclePrefab: {fileID: 695711878000760049, guid: 30578c6b9f483704ea6e8ae8ee7a8892, type: 3}
-  SupportObjectPrefab: {fileID: -4755438682567490364, guid: 077e8465456fffa4e8b1060cc5851583, type: 3}
-  Mass: 1
-  GravityScale: 4
-  CheckSupportObjectRadius: 0.5
-  CheckSupportObjectDelay: 0.5
   TimeLimit: 45
+  CheckSupportObjectDelay: 0.5
+  CheckSupportObjectRadius: 0.5
+  DashMaxTime: 3
+  DashMaxSpeed: 20
   SpeedMax: 10
-  SpeedMin: 3
-  SpeedIncreaseValue: 0.8
+  SpeedMin: 4
+  SpeedIncreaseValue: 0.5
   SpeedDecreaseValue: 0.5
   PlayerPosX_L: -11
   PlayerPosX_R: -6
   PlayerPosY: 1
   PlayerPosZ: 0
-  Speed: 6.5000005
-  Score: 796.3335326423928
-  Timer: 16.776073
-  State: 1
+  PrevSpeed: 4
+  Speed: 4.5
+  Score: 2281.7127132974565
+  Timer: 45.00233
+  State: 3
+  DashTime: -0.005702953

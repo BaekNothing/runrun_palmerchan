@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using UnityEngine;
 
 public class SupportObject : AbstractObject
@@ -13,11 +14,11 @@ public class SupportObject : AbstractObject
         Hyper
     }
 
-    public override void Init(float depth, Transform resetPoint)
+    public override void Init(float depth)
     {
         _depth = depth;
-        _resetPoint = resetPoint;
-        ResetPosition();
+        this.gameObject.SetActive(false);
+        Reset();
     }
 
     public override void Move(Vector2 direction)
@@ -33,17 +34,23 @@ public class SupportObject : AbstractObject
     {
         if (other.gameObject.tag == "Finish")
         {
-            ResetPosition();
+            Reset();
             gameObject.SetActive(false);
         }
     }
 
-    public void ResetPosition()
+    public override void SetPositionOffset()
     {
-        var delayOffset = UnityEngine.Random.Range(0.0f, 120f);
-        gameObject.transform.position = _resetPoint.position + new Vector3(delayOffset, 0, _depth);
-        _supportType = (SupportType)UnityEngine.Random.Range(0, 2);
+        var delayOffset = UnityEngine.Random.Range(
+            ObjectData.Instance.SupportRandomRange.x, ObjectData.Instance.SupportRandomRange.y);
+        gameObject.transform.position += new Vector3(delayOffset, 0, 0);
+    }
 
-        _spriteRenderer.color = _supportType == SupportType.Common ? Color.yellow : Color.blue;
+    public override void ResetAction()
+    {
+        base.ResetAction();
+
+        _supportType = ObjectData.Instance.CheckDashObject() ? SupportType.Hyper : SupportType.Common;
+        _spriteRenderer.color = _supportType == SupportType.Hyper ? Color.blue : Color.yellow;
     }
 }
