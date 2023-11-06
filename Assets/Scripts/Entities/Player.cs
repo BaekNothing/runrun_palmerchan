@@ -109,6 +109,10 @@ public class Player : MonoBehaviour
         {
             // if player check support object, reset check delay
             SetSupportDelay(GameData.Instance.CheckSupportObjectDelay);
+            GameData.Instance.SetSpeed(
+                Mathf.Min( // speed can't be over than speed max
+                    GameData.Instance.SpeedIncreaseValue + GameData.Instance.Speed,
+                    GameData.Instance.SpeedMax));
 
             var supportType = supportObject.GetComponent<SupportObject>()?.GetSupportType();
             if (supportType == SupportObject.SupportType.Common)
@@ -133,10 +137,6 @@ public class Player : MonoBehaviour
     void SupportAction_SpeedUp()
     {
         EffectController.PlayEffect((int)PlayerCheckEffectState.GREAT);
-        GameData.Instance.SetSpeed(
-        Mathf.Min( // speed can't be over than speed max
-            GameData.Instance.SpeedIncreaseValue + GameData.Instance.Speed,
-            GameData.Instance.SpeedMax));
         Utility.Log("Speed: " + GameData.Instance.Speed, Utility.LogLevel.Verbose);
     }
 

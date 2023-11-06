@@ -27,12 +27,12 @@ MonoBehaviour:
   SpeedIncreaseValue: 0.4
   SpeedDecreaseValue: 0.2
   PlayerPosX_L: -11
-  PlayerPosX_R: -6
+  PlayerPosX_R: -8
   PlayerPosY: 1
   PlayerPosZ: 0
-  PrevSpeed: 6.0000005
-  Speed: 6.0000005
-  Score: 1469.0117609290317
-  Timer: 20.333864
+  PrevSpeed: 8.000001
+  Speed: 8.000001
+  Score: 1844.996734875875
+  Timer: 23.36511
   State: 1
-  DashTime: -0.004685335
+  DashTime: -0.0019140448

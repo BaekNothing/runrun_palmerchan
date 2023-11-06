@@ -17,8 +17,8 @@ MonoBehaviour:
   BgObjectsPrefab: {fileID: 6965412290759755650, guid: c2d3b328496a798409e15acbcd3e1fc4, type: 3}
   ObstaclePrefab: {fileID: 695711878000760049, guid: 30578c6b9f483704ea6e8ae8ee7a8892, type: 3}
   SupportObjectPrefab: {fileID: -4755438682567490364, guid: 077e8465456fffa4e8b1060cc5851583, type: 3}
-  SupportProbability: 0.4
-  DashBaseSpeed: 7
+  SupportProbability: 0.55
+  DashBaseSpeed: 7.4
   DashProbability: 0.8
   ResetPosition: {x: 20, y: 0, z: 0}
   BgObjectMaxCount: 10
@@ -26,5 +26,5 @@ MonoBehaviour:
   BgObjectDepthRange: {x: 0.2, y: 0.9}
   SupportRandomRange: {x: 0, y: 5}
   SupportObjectDepth: 1
-  SupportObjectMaxCount: 4
+  SupportObjectMaxCount: 3
   SupportObjectCreateDelay: 0.8
