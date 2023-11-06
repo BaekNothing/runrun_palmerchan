@@ -182,6 +182,7 @@ public class GameData : ScriptableObject
         Speed = SpeedMin;
         Score = 0;
         Timer = 0;
+        DashTime = 0;
         State = GameState.Ready;
         PausedTime = DateTime.MinValue;
     }

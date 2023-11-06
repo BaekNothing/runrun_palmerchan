@@ -24,15 +24,15 @@ MonoBehaviour:
   DashMaxSpeed: 20
   SpeedMax: 10
   SpeedMin: 4
-  SpeedIncreaseValue: 0.5
-  SpeedDecreaseValue: 0.5
+  SpeedIncreaseValue: 0.4
+  SpeedDecreaseValue: 0.2
   PlayerPosX_L: -11
   PlayerPosX_R: -6
   PlayerPosY: 1
   PlayerPosZ: 0
-  PrevSpeed: 4
-  Speed: 4.5
-  Score: 2281.7127132974565
-  Timer: 45.00233
-  State: 3
-  DashTime: -0.005702953
+  PrevSpeed: 6.0000005
+  Speed: 6.0000005
+  Score: 1469.0117609290317
+  Timer: 20.333864
+  State: 1
+  DashTime: -0.004685335

@@ -4,10 +4,14 @@ PlayerPrefab : Player (Player)
 BgObjectsPrefab : Dummy (BgObject)
 ObstaclePrefab : Objstacle (ObstacleObject)
 SupportObjectPrefab : Support (SupportObject)
-Mass : 1
-GravityScale : 4
-ResetPosition : (20.00, 0.00)
-CheckSupportObjectRadius : 0.5
-CheckSupportObjectDelay : 0.5
+SupportProbability : 0.4
+DashBaseSpeed : 7
+DashProbability : 0.8
+ResetPosition : (20.00, 0.00, 0.00)
+BgObjectMaxCount : 10
+BgObjectRandomRange : (0.00, 100.00)
+BgObjectDepthRange : (0.20, 0.90)
+SupportRandomRange : (0.00, 5.00)
+SupportObjectDepth : 1
 SupportObjectMaxCount : 4
-SupportObjectCreateDelay : 3
+SupportObjectCreateDelay : 0.8
