@@ -17,6 +17,10 @@ MonoBehaviour:
   BgObjectsPrefab: {fileID: 6965412290759755650, guid: c2d3b328496a798409e15acbcd3e1fc4, type: 3}
   ObstaclePrefab: {fileID: 695711878000760049, guid: 30578c6b9f483704ea6e8ae8ee7a8892, type: 3}
   SupportObjectPrefab: {fileID: -4755438682567490364, guid: 077e8465456fffa4e8b1060cc5851583, type: 3}
+  TouchEffectPrefab: {fileID: -4736057528406300936, guid: 45b633c449aacdd41b17cf58013a8593, type: 3}
+  TouchEffectPoolSize: 1
+  TouchTailPrefab: {fileID: -3138128817946641834, guid: cdc202e746b612d4787ad95a347bb7bf, type: 3}
+  TouchTailPoolSize: 1
   SupportProbability: 0.55
   DashBaseSpeed: 7.4
   DashProbability: 0.8

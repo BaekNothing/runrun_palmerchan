@@ -10,6 +10,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(EventSystem))]
+[RequireComponent(typeof(ObjectPoolSystem))]
 public class GameCoreSystem : MonoBehaviour
 {
     [SerializeField] PeriodicActionManager _periodicActionManager = new();

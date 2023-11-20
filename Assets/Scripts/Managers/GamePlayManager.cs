@@ -112,6 +112,44 @@ public class GamePlayManager : AbstractManager
     {
         // if this function binded ActionType.Pressed. it can make bug which is when player press space, game start and check supportitem at the same time.
         InputManager.BindMouse(MouseButton.LeftMouse, GameStart, ActionWrapper.ActionType.Released);
+        InputManager.BindMouse(MouseButton.LeftMouse, ShowTouchEffect, ActionWrapper.ActionType.Pressed);
+        InputManager.BindMouse(MouseButton.LeftMouse, ShowTouchTailEffect, ActionWrapper.ActionType.Held);
+        InputManager.BindMouse(MouseButton.LeftMouse, HideTouchTailEffect, ActionWrapper.ActionType.Released);
+    }
+
+    void ShowTouchEffect()
+    {
+        Vector3 mousePosition = MainCamera.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0;
+
+        var touchEffect = ObjectPoolSystem.GetObject(ObjectPoolSystem.PoolType.TouchEffect);
+        if (touchEffect != null)
+            touchEffect.transform.position = mousePosition;
+
+    }
+
+    PoolObject _touchTail;
+
+    void ShowTouchTailEffect()
+    {
+        if (_touchTail == null)
+            _touchTail = ObjectPoolSystem.GetObject(ObjectPoolSystem.PoolType.TouchTail);
+
+        if (_touchTail != null)
+        {
+            Vector3 mousePosition = MainCamera.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0;
+            _touchTail.transform.position = mousePosition;
+        }
+    }
+
+    void HideTouchTailEffect()
+    {
+        if (_touchTail == null)
+            return;
+
+        ObjectPoolSystem.ReturnObject(ObjectPoolSystem.PoolType.TouchTail, _touchTail);
+        _touchTail = null;
     }
 
     void BindPeriodicAction()

@@ -119,6 +119,12 @@ public class ObjectData : ScriptableObject
     public ObstacleObject ObstaclePrefab;
     public SupportObject SupportObjectPrefab;
 
+    [Header("Effect Object")]
+    public PoolObject TouchEffectPrefab;
+    public int TouchEffectPoolSize = 1;
+    public PoolObject TouchTailPrefab;
+    public int TouchTailPoolSize = 1;
+
     [Header("Immutable Value")]
     public float SupportProbability = 0.95f; // this is condition of create supportObject (0.1 = 10%)
     public float DashBaseSpeed = 5f; // below this speed, dashObject can't create
