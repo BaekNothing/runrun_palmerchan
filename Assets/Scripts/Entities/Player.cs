@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -28,15 +25,27 @@ public class Player : MonoBehaviour
         }
     }
 
-    [SerializeField] Animator ani;
-    Animator Ani
+    [SerializeField] SpineController _spineController;
+    public SpineController SpineController
     {
         get
         {
-            if (ani == null)
-                ani = GetComponent<Animator>();
-            return ani;
+            if (_spineController == null)
+                _spineController = new SpineController(this.gameObject);
+            return _spineController;
         }
+    }
+
+    public enum PlayerAnimation
+    {
+        end,
+        idle,
+        run
+    }
+
+    public void SetAnimation(PlayerAnimation animation, bool loop)
+    {
+        SpineController.SetAnimation(animation.ToString(), loop);
     }
 
     [SerializeField] float _checkSupportDelay = 0;
