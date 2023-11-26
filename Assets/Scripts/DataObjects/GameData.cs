@@ -151,9 +151,18 @@ public class GameData : ScriptableObject
     public float PlayerPosY = 1f;
     public float PlayerPosZ = 0f;
 
+    public float PlayerAnimationTimeScaleMin = 1.4f;
+    public float PlayerAnimationTimeScaleMax = 4f;
+
     [Header("Mutable Value")]
     public float PrevSpeed = 1;
     public float Speed = 1;
+
+    public float AnimationTimeScale =>
+        (Speed - SpeedMin) / (SpeedMax - SpeedMin) *
+        (PlayerAnimationTimeScaleMax - PlayerAnimationTimeScaleMin) + PlayerAnimationTimeScaleMin;
+
+    public float DashAnimationTimeScale => AnimationTimeScale / SpeedMax * DashMaxSpeed;
     public double Score = 0;
     public float Timer = 0;
     public GameState State = GameState.Ready;

@@ -15,7 +15,18 @@ public class SpineController
 
     public void SetAnimation(string animationName, bool loop)
     {
-        _skeletonAnimation.AnimationName = animationName;
         _skeletonAnimation.loop = loop;
+        SetTimeScale(GameData.Instance.PlayerAnimationTimeScaleMin);
+        _skeletonAnimation.AnimationName = animationName;
+    }
+
+    public void SetUnScaledTime(bool isUnScaledTime)
+    {
+        _skeletonAnimation.UnscaledTime = isUnScaledTime;
+    }
+
+    public void SetTimeScale(float timeScale)
+    {
+        _skeletonAnimation.timeScale = timeScale;
     }
 }

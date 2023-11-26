@@ -1,3 +1,4 @@
+using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -48,6 +49,11 @@ public class Player : MonoBehaviour
         SpineController.SetAnimation(animation.ToString(), loop);
     }
 
+    public void SetUnScaledTime(bool isUnScaledTime)
+    {
+        SpineController.SetUnScaledTime(isUnScaledTime);
+    }
+
     [SerializeField] float _checkSupportDelay = 0;
     public void SetSupportDelay(float delay) => _checkSupportDelay = delay;
 
@@ -73,6 +79,10 @@ public class Player : MonoBehaviour
         // bind game start action
         float startDelay = GameData.Instance.CheckSupportObjectDelay / 2;
         GamePlayManager.BindGameStartAction(() => SetSupportDelay(startDelay));
+        GamePlayManager.BindGameStartAction(() => SetAnimation(PlayerAnimation.run, true));
+        GamePlayManager.BindGameStartAction(() => SetUnScaledTime(true));
+        GamePlayManager.BindGamePausedAction(() => SetUnScaledTime(false));
+        GamePlayManager.BindGameOverAction(() => SetAnimation(PlayerAnimation.end, false));
     }
 
     public void SetData()
@@ -122,6 +132,7 @@ public class Player : MonoBehaviour
                 Mathf.Min( // speed can't be over than speed max
                     GameData.Instance.SpeedIncreaseValue + GameData.Instance.Speed,
                     GameData.Instance.SpeedMax));
+            SpineController.SetTimeScale(GameData.Instance.AnimationTimeScale);
 
             var supportType = supportObject.GetComponent<SupportObject>()?.GetSupportType();
             if (supportType == SupportObject.SupportType.Common)
@@ -140,6 +151,7 @@ public class Player : MonoBehaviour
                 Mathf.Max( // speed can't be lower than speed min
                     GameData.Instance.Speed - GameData.Instance.SpeedDecreaseValue,
                     GameData.Instance.SpeedMin));
+            SpineController.SetTimeScale(GameData.Instance.AnimationTimeScale);
         }
     }
 
@@ -153,6 +165,7 @@ public class Player : MonoBehaviour
     {
         EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
         GameData.Instance.StartDash();
+        SpineController.SetTimeScale(GameData.Instance.DashAnimationTimeScale);
     }
 
     void CheckDashEnd()
@@ -163,6 +176,7 @@ public class Player : MonoBehaviour
             if (GameData.Instance.DashTime <= 0)
             {
                 GameData.Instance.EndDash();
+                SpineController.SetTimeScale(GameData.Instance.AnimationTimeScale);
             }
         }
     }
