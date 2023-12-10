@@ -25,6 +25,7 @@ public abstract class AbstractCutIn : MonoBehaviour
 {
     public Vector2 StartPosition = Vector2.zero;
     public AnimationCurve Curve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+    System.Action CutinEndCallback = null;
 
     [SerializeField] Vector2 Direction = Vector2.zero;
     [SerializeField] protected float Duration = 0f;
@@ -49,6 +50,8 @@ public abstract class AbstractCutIn : MonoBehaviour
         Init();
         CutIn();
     }
+
+    public void SetCutinEndCallback(System.Action callback) => CutinEndCallback = callback;
 
     void Init()
     {
@@ -91,6 +94,7 @@ public abstract class AbstractCutIn : MonoBehaviour
 
         EndAction();
         gameObject.SetActive(false);
+        CutinEndCallback?.Invoke();
 
         if (GameData.Instance.State == GameData.GameState.Play)
             Utility.ResumeGame();

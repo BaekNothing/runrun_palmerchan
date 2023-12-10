@@ -153,6 +153,7 @@ public class GameData : ScriptableObject
 
     public float PlayerAnimationTimeScaleMin = 1.4f;
     public float PlayerAnimationTimeScaleMax = 4f;
+    public float PlayerDashAnimationTimeMultiplier = 2f;
 
     [Header("Mutable Value")]
     public float PrevSpeed = 1;
@@ -162,7 +163,7 @@ public class GameData : ScriptableObject
         (Speed - SpeedMin) / (SpeedMax - SpeedMin) *
         (PlayerAnimationTimeScaleMax - PlayerAnimationTimeScaleMin) + PlayerAnimationTimeScaleMin;
 
-    public float DashAnimationTimeScale => AnimationTimeScale / SpeedMax * DashMaxSpeed;
+    public float DashAnimationTimeScale => PlayerAnimationTimeScaleMax * PlayerDashAnimationTimeMultiplier;
     public double Score = 0;
     public float Timer = 0;
     public GameState State = GameState.Ready;

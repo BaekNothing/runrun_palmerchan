@@ -91,6 +91,7 @@ public class Player : MonoBehaviour
         _positionBySpeed.z = GameData.Instance.PlayerPosZ;
 
         EffectController.BindCutInIsOn(IsCutInActive);
+        EffectController.SetCutInEndCallback(SupportAction_Dash);
     }
 
     bool IsCutInActive(int index)
@@ -140,7 +141,9 @@ public class Player : MonoBehaviour
             }
             else
             {
-                SupportAction_Dash();
+                // Show Perfect Effect >> Start cut in >> dash
+                EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
+                SpineController.SetTimeScale(0);
             }
         }
         else
@@ -162,7 +165,6 @@ public class Player : MonoBehaviour
 
     void SupportAction_Dash()
     {
-        EffectController.PlayEffect((int)PlayerCheckEffectState.PERFECT);
         GameData.Instance.StartDash();
         SpineController.SetTimeScale(GameData.Instance.DashAnimationTimeScale);
     }

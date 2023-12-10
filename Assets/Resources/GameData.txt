@@ -15,14 +15,14 @@ SpeedIncreaseValue : 0.4
 SpeedDecreaseValue : 0.2
 PlayerPosX_L : -11
 PlayerPosX_R : -8
-PlayerPosY : 1
+PlayerPosY : -2
 PlayerPosZ : 0
-PlayerAnimationTimeScaleMin : 1.4
+PlayerAnimationTimeScaleMin : 1.35
 PlayerAnimationTimeScaleMax : 4
-PrevSpeed : 8.000002
-Speed : 8.000002
-Score : 2731.56602174132
-Timer : 36.51539
-State : Play
+PrevSpeed : 0
+Speed : 4
+Score : 0
+Timer : 0
+State : Ready
 PausedTime : 0001-01-01 오전 12:00:00
-DashTime : -0.0007695816
+DashTime : 0

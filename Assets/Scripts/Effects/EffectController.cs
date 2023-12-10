@@ -26,4 +26,9 @@ public class EffectController : MonoBehaviour
     {
         _cutInIsOn = cutInIsOn;
     }
+
+    public void SetCutInEndCallback(System.Action callback)
+    {
+        _cutIn.SetCutinEndCallback(callback);
+    }
 }

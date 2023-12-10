@@ -32,9 +32,9 @@ MonoBehaviour:
   PlayerPosZ: 0
   PlayerAnimationTimeScaleMin: 1.35
   PlayerAnimationTimeScaleMax: 4
-  PrevSpeed: 9.2
-  Speed: 7.2000012
-  Score: 881.0854403333944
-  Timer: 15.175262
-  State: 1
+  PrevSpeed: 0
+  Speed: 4
+  Score: 0
+  Timer: 0
+  State: 0
   DashTime: 0
