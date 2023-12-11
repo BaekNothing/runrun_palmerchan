@@ -24,11 +24,11 @@ MonoBehaviour:
   SupportProbability: 0.55
   DashBaseSpeed: 7.4
   DashProbability: 0.8
-  ResetPosition: {x: 20, y: 0, z: 0}
-  BgObjectMaxCount: 10
-  BgObjectRandomRange: {x: 0, y: 100}
+  ResetPosition: {x: 20, y: 1, z: 0}
+  BgObjectMaxCount: 15
+  BgObjectRandomRange: {x: 0, y: 10}
   BgObjectDepthRange: {x: 0.2, y: 0.9}
   SupportRandomRange: {x: 0, y: 5}
   SupportObjectDepth: 1
-  SupportObjectMaxCount: 3
-  SupportObjectCreateDelay: 0.8
+  SupportObjectMaxCount: 2
+  SupportObjectCreateDelay: 0.7

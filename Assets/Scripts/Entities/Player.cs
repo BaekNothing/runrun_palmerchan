@@ -120,8 +120,8 @@ public class Player : MonoBehaviour
             return;
         SetSupportDelay(0);
 
-        var supportObject = Physics2D.OverlapCircle(transform.position,
-            GameData.Instance.CheckSupportObjectRadius * (GameData.Instance.Speed - GameData.Instance.SpeedMin) * 0.5f
+        var supportObject = Physics2D.OverlapCircle(transform.position, GameData.Instance.CheckSupportObjectRadius
+            //GameData.Instance.CheckSupportObjectRadius * (GameData.Instance.Speed - GameData.Instance.SpeedMin) * 0.5f
             , LayerMask.GetMask("SupportObjects"));
 
         if (supportObject)

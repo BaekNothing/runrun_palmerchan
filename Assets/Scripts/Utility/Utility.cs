@@ -8,7 +8,14 @@ public static class Utility
     public const string TAG_PLAYER = "Player";
     public const string TAG_SUPPORT = "Support";
     public const string TAG_RESPAWN = "Respawn";
-    public const string SCORE_FORMAT = "000000000";
+    public const string SCORE_FORMAT = "0000000";
+
+    public enum ObjectDrawOrder
+    {
+        Background = -2,
+        Item,
+        UI
+    }
 
     public enum LogLevel
     {
@@ -46,6 +53,17 @@ public static class Utility
         {
             Debug.Log(message);
         }
+    }
+
+    public static Color HexColor(string hexCode)
+    {
+        if (ColorUtility.TryParseHtmlString(hexCode, out Color color))
+        {
+            return color;
+        }
+
+        Debug.LogError("[UnityExtension::HexColor]invalid hex code - " + hexCode);
+        return Color.white;
     }
 
     public static void PauseGame()

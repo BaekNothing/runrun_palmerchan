@@ -7,16 +7,19 @@ public class SupportObject : AbstractObject
 {
     [SerializeField] SupportType _supportType = 0;
     public SupportType GetSupportType() => _supportType;
+    public Sprite[] _sprites = new Sprite[2];
 
     public enum SupportType
     {
-        Common,
+        Common = 0,
         Hyper
     }
 
     public override void Init(float depth)
     {
         _depth = depth;
+        _spriteRenderer.sortingOrder = (int)Utility.ObjectDrawOrder.Item;
+
         this.gameObject.SetActive(false);
         Reset();
     }
@@ -51,6 +54,7 @@ public class SupportObject : AbstractObject
         base.ResetAction();
 
         _supportType = ObjectData.Instance.CheckDashObject() ? SupportType.Hyper : SupportType.Common;
-        _spriteRenderer.color = _supportType == SupportType.Hyper ? Color.blue : Color.yellow;
+        _spriteRenderer.sprite = _sprites[(int)_supportType];
+        _spriteRenderer.color = _supportType == SupportType.Hyper ? Utility.HexColor("#FF7343") : Utility.HexColor("#FFB67C");
     }
 }

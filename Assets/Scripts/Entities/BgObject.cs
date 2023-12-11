@@ -4,15 +4,38 @@ using UnityEngine;
 
 public class BgObject : AbstractObject
 {
+    public Sprite[] _sprites_Near = new Sprite[0];
+    public Sprite[] _sprites_Far = new Sprite[0];
+
     public override void Init(float depth)
     {
-        _depth = depth;
+        _depth = 1 - depth;
 
-        _spriteRenderer.sortingOrder = (int)(-depth);
-        _spriteRenderer.material.color = new Color(1, 1, 1, depth);
-        transform.localScale = new Vector3(0.8f + (1 - depth) * 3, 0.8f + (1 - depth) * 3, 1);
+        _spriteRenderer.sortingOrder = (int)(-depth) + (int)Utility.ObjectDrawOrder.Background;
+        _spriteRenderer.material.color = new Color(1, 1, 1, 1 - depth * 0.5f);
+        SetSprite(depth);
+        transform.localScale = new Vector3(2f - depth, 2f - depth, 1);
 
         Reset();
+    }
+
+
+    public void SetSprite(float depth)
+    {
+        if (depth < 0.5f)
+        {
+            if (_sprites_Near.Length > 0)
+                _spriteRenderer.sprite = _sprites_Near[Random.Range(0, _sprites_Near.Length)];
+            else
+                _spriteRenderer.sprite = null;
+        }
+        else
+        {
+            if (_sprites_Far.Length > 0)
+                _spriteRenderer.sprite = _sprites_Far[Random.Range(0, _sprites_Far.Length)];
+            else
+                _spriteRenderer.sprite = null;
+        }
     }
 
     public override void Move(Vector2 direction)
