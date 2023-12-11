@@ -9,6 +9,7 @@ public static class Utility
     public const string TAG_SUPPORT = "Support";
     public const string TAG_RESPAWN = "Respawn";
     public const string SCORE_FORMAT = "0000000";
+    public const string SPEED_FORMAT = "00.0";
 
     public enum ObjectDrawOrder
     {

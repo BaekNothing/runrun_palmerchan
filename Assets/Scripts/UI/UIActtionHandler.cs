@@ -18,4 +18,11 @@ public class UIActtionHandler : MonoBehaviour
     {
         _invokePause?.Invoke();
     }
+
+    public void InvokeCredits()
+    {
+        _invokePause?.Invoke();
+        //Move to github repo
+        Application.OpenURL("https://github.com/BaekNothing/runrun_palmerchan");
+    }
 }

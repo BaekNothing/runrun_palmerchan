@@ -26,16 +26,16 @@ MonoBehaviour:
   SpeedMin: 4
   SpeedIncreaseValue: 0.3
   SpeedDecreaseValue: 0.2
-  PlayerPosX_L: -11
-  PlayerPosX_R: -8
+  PlayerPosX_L: -10
+  PlayerPosX_R: -7
   PlayerPosY: -2
   PlayerPosZ: 0
   PlayerAnimationTimeScaleMin: 1.35
   PlayerAnimationTimeScaleMax: 4
   PlayerDashAnimationTimeMultiplier: 2
-  PrevSpeed: 7.7000036
-  Speed: 7.7000036
-  Score: 2647.4540692943297
-  Timer: 38.329826
+  PrevSpeed: 9.000004
+  Speed: 6.4000015
+  Score: 832.9174809117729
+  Timer: 16.633867
   State: 1
-  DashTime: -0.010973464
+  DashTime: 0
